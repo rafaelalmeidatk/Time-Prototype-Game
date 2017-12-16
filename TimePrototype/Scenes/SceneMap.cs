@@ -59,6 +59,14 @@ namespace TimePrototype.Scenes
 
         private MapPath[] _paths;
 
+        //--------------------------------------------------
+        // HUD
+
+        private Entity[] _hudEntities;
+        private Vector2[] _hudPositions;
+
+        private Sprite _playerHudFillSprite;
+
         //----------------------//------------------------//
 
         public override void initialize()
@@ -136,6 +144,11 @@ namespace TimePrototype.Scenes
 
             var playerComponent = player.addComponent<PlayerComponent>();
             playerComponent.sprite.renderLayer = PLAYER_RENDER_LAYER;
+
+            // Timer
+            createEntity("timer")
+                .addComponent(new TimerComponent(player))
+                .setVisible(false);
         }
 
         private void setupPaths()
@@ -286,7 +299,7 @@ namespace TimePrototype.Scenes
         {
             var objectGroup = _tiledMap.getObjectGroup("objects");
             var doorObj = objectGroup?.objectsWithType("door");
-            if (doorObj.Count == 0) return;
+            if (doorObj?.Count == 0) return;
 
             var entity = createEntity("door");
             entity
@@ -300,7 +313,7 @@ namespace TimePrototype.Scenes
         {
             var objectGroup = _tiledMap.getObjectGroup("objects");
             var keyObj = objectGroup?.objectsWithType("key");
-            if (keyObj.Count == 0) return;
+            if (keyObj?.Count == 0) return;
 
             var entity = createEntity("key");
             entity
@@ -308,6 +321,26 @@ namespace TimePrototype.Scenes
                 .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.key)));
 
             entity.setPosition(keyObj[0].position + new Vector2(keyObj[0].width, keyObj[0].height) / 2);
+        }
+
+        private void setupHud()
+        {
+            _hudEntities = new Entity[2];
+            _hudPositions = new Vector2[4];
+            /*
+            _hudEntities[0] = createEntity("playerHudBack");
+            _hudEntities[0].addComponent(new Sprite(content.Load<Texture2D>(Content.Hud.player_hud)) { renderLayer = HUD_BACK_RENDER_LAYER })
+                .setOriginNormalized(Vector2.Zero)
+                .transform.localPosition = new Vector2(3, 5);
+            _hudPositions[0] = new Vector2(6, 17);
+
+            _hudEntities[1] = createEntity("playerHudFill");
+            _hudEntities[1].addComponent(new Sprite(content.Load<Texture2D>(Content.Hud.player_hp)) { renderLayer = HUD_FILL_RENDER_LAYER })
+                .setOriginNormalized(Vector2.Zero)
+                .transform.localPosition = new Vector2(3, 5);
+            _hudPositions[1] = new Vector2(6, 17);
+            */
+            _playerHudFillSprite = findEntity("playerHudFill").getComponent<Sprite>();
         }
 
         private void setupTransfers()

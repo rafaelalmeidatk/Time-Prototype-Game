@@ -37,6 +37,7 @@ namespace Nez
 			public const string bush_with_player = @"misc\bush_with_player";
 			public const string door = @"misc\door";
 			public const string key = @"misc\key";
+			public const string timer = @"misc\timer";
 		}
 
 		public static class System

@@ -107,6 +107,19 @@ namespace TimePrototype.Components.Player
 
         public bool isWithKey;
 
+        //--------------------------------------------------
+        // Slowdown power
+
+        private const float SLOWDOWN_DURATION = 2.0f;
+        private const float SLOWDOWN_COOLDOWN = 2.0f;
+        private float _slowdownPower;
+        private float _slowdownCooldown;
+
+        //--------------------------------------------------
+        // Timer
+
+        private TimerComponent _timer;
+
         //----------------------//------------------------//
 
         public override void initialize()
@@ -155,6 +168,10 @@ namespace TimePrototype.Components.Player
 
             // init fsm
             _fsm = new FiniteStateMachine<PlayerState, PlayerComponent>(this, new StandState());
+
+            // init slowdown
+            _slowdownPower = 2;
+            _slowdownCooldown = 0.0f;
         }
 
         public override void onAddedToEntity()
@@ -168,6 +185,8 @@ namespace TimePrototype.Components.Player
             _battleComponent.battleEntity = this;
             _battleComponent.ImmunityDuration = 0.5f;
             _battleComponent.destroyEntityAction = destroyEntity;
+
+            _timer = entity.scene.findEntity("timer").getComponent<TimerComponent>();
         }
 
         public void destroyEntity()
@@ -210,8 +229,45 @@ namespace TimePrototype.Components.Player
         public void update()
         {
             // Slowdown
-            Time.timeScale = Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown ? 0.4f : 1.0f;
+            if (Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown && _slowdownPower > 0.0f)
+            {
+                Time.timeScale = 0.4f;
+                _slowdownPower -= Time.unscaledDeltaTime;
+                if (_slowdownPower <= 0.0f)
+                {
+                    _slowdownCooldown = SLOWDOWN_COOLDOWN;
+                }
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+                if (_slowdownCooldown <= 0.0f)
+                {
+                    _slowdownPower = Math.Min(_slowdownPower + Time.unscaledDeltaTime, SLOWDOWN_DURATION);
+                }
+            }
 
+            if (_slowdownCooldown > 0.0f)
+            {
+                _timer.setByPorcentage((SLOWDOWN_COOLDOWN - _slowdownCooldown) / SLOWDOWN_COOLDOWN, true);
+                _slowdownCooldown -= Time.unscaledDeltaTime;
+                if (_slowdownCooldown <= 0.0f)
+                {
+                    _slowdownPower = SLOWDOWN_DURATION;
+                }
+            }
+            else
+            {
+                if (_slowdownPower == SLOWDOWN_DURATION)
+                {
+                    _timer.setVisible(false);
+                }
+                else
+                {
+                    _timer.setVisible(true);
+                    _timer.setByPorcentage(_slowdownPower / SLOWDOWN_DURATION, false);
+                }
+            }
             // Update FSM
             _fsm.update();
 
@@ -275,7 +331,7 @@ namespace TimePrototype.Components.Player
             var mms = _platformerObject.maxMoveSpeed;
             var velx = _platformerObject.velocity.X;
             var vely = _platformerObject.velocity.Y;
-            bool appliedKb = false;
+            var appliedKb = false;
             if (_knockbackTick.X > 0)
             {
                 _platformerObject.velocity.X = MathHelper.Clamp(velx + _platformerObject.moveSpeed * _knockbackVelocity.X * Time.unscaledDeltaTime, -mms, mms);
@@ -323,6 +379,13 @@ namespace TimePrototype.Components.Player
         public bool isOnGround()
         {
             return ForcedGround || _platformerObject.collisionState.below;
+        }
+
+        public override void debugRender(Graphics graphics)
+        {
+            base.debugRender(graphics);
+
+            graphics.batcher.drawString(Graphics.instance.bitmapFont, _slowdownPower.ToString(), entity.position - 30 * Vector2.UnitY, Color.White);
         }
     }
 }
