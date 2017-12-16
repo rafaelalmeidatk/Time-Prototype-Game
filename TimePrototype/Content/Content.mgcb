@@ -184,3 +184,23 @@
 /processorParam:TextureFormat=Color
 /build:misc/bush_with_player.png
 
+#begin maps/map2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map2.tmx
+
+#begin maps/map3.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map3.tmx
+
+#begin maps/map4.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map4.tmx
+
+#begin maps/map5.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map5.tmx
+

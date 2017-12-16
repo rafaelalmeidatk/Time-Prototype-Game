@@ -49,12 +49,14 @@
     <Compile Include="Components\Battle\Enemies\EnemyPatrolComponent.cs" />
     <Compile Include="Components\Battle\Enemies\EnemyPatrolStates.cs" />
     <Compile Include="Components\Battle\Enemies\EnemyPlaceholderComponent.cs" />
+    <Compile Include="Components\Battle\Enemies\EnemySniperComponent.cs" />
     <Compile Include="Components\Battle\EnemyComponent.cs" />
     <Compile Include="Components\Battle\HitscanComponent.cs" />
     <Compile Include="Components\Battle\ProjectileComponent.cs" />
     <Compile Include="Components\Colliders\AreaOfSightCollider.cs" />
     <Compile Include="Components\Colliders\AttackCollider.cs" />
     <Compile Include="Components\Colliders\HurtCollider.cs" />
+    <Compile Include="Components\GraphicComponents\LaserComponent.cs" />
     <Compile Include="Components\GraphicComponents\TimedSpriteTail.cs" />
     <Compile Include="Components\InteractionCollider.cs" />
     <Compile Include="Components\Map\BushComponent.cs" />

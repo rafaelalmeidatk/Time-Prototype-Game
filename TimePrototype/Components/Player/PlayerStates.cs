@@ -35,11 +35,6 @@ namespace TimePrototype.Components.Player
                     fsm.pushState(new ReturnInTimeState());
                 }
 
-                if (_input.TimeSlowdownButton.isPressed)
-                {
-                    fsm.pushState(new TimeSlowdownState());
-                }
-
                 if (entity.isOnBush && _input.BushButton.isPressed)
                 {
                     fsm.pushState(new OnBushState());
@@ -194,29 +189,6 @@ namespace TimePrototype.Components.Player
             entity.returningInTime = false;
             entity.platformerObject.velocity = Vector2.Zero;
             entity.forcePosition = false;
-        }
-    }
-
-    public class TimeSlowdownState : PlayerState
-    {
-        private bool slowingDown;
-
-        public override void begin()
-        {
-            Time.timeScale = 0.4f;
-        }
-
-        public override void update()
-        {
-            if (!_input.TimeSlowdownButton.isDown)
-            {
-                fsm.resetStackTo(new StandState());
-            }
-        }
-
-        public override void end()
-        {
-            Time.timeScale = 1.0f;
         }
     }
 

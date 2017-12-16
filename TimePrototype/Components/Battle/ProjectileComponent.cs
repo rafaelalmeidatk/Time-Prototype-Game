@@ -8,7 +8,7 @@ using TimePrototype.Scenes;
 
 namespace TimePrototype.Components.Battle
 {
-    class ProjectileComponent : Component, IUpdatable
+    public class ProjectileComponent : Component
     {
         //--------------------------------------------------
         // Sprite
@@ -18,14 +18,15 @@ namespace TimePrototype.Components.Battle
         //--------------------------------------------------
         // Direction, Speed and Type
 
-        private int _direction;
-        private float _speed;
+        private readonly int _direction;
+        private readonly float _speed;
 
         //----------------------//------------------------//
 
-        public ProjectileComponent(int direction)
+        public ProjectileComponent(int direction, float speed)
         {
             _direction = direction;
+            _speed = speed;
         }
 
         public override void initialize()
@@ -40,8 +41,6 @@ namespace TimePrototype.Components.Battle
 
             var collider = entity.addComponent(new BoxCollider(-6, -2, 12, 5));
             Flags.setFlagExclusive(ref collider.physicsLayer, SceneMap.PROJECTILES_LAYER);
-
-            _speed = 1000f;
             
             if (_direction < 0)
             {
@@ -56,8 +55,10 @@ namespace TimePrototype.Components.Battle
 
         public void update()
         {
-            var velx = (float)Math.Cos(entity.transform.rotation) * _speed * _direction * Time.deltaTime;
-            var vely = (float)Math.Sin(entity.transform.rotation * _direction) * _speed * Time.deltaTime + 0.4f;
+            var scale = Time.timeScale < 1 ? 0.1f : Time.timeScale;
+            var deltaTime = Time.unscaledDeltaTime * scale;
+            var velx = (float)Math.Cos(entity.transform.rotation) * _speed * _direction * deltaTime;
+            var vely = (float)Math.Sin(entity.transform.rotation * _direction) * _speed * deltaTime + 0.4f;
             var vel = new Vector2(velx, vely);
             entity.setPosition(entity.position + vel);
         }

@@ -32,14 +32,14 @@
 </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="playerSpawn" x="216.5" y="208.5"/>
+  <object id="1" name="playerSpawn" x="414.5" y="76.5"/>
  </objectgroup>
  <objectgroup name="transfers">
   <object id="5" name="To Village" type="onTouch" x="464" y="-32" width="4" height="160">
    <properties>
-    <property name="destinyId" type="int" value="2"/>
+    <property name="destinyId" type="int" value="1"/>
     <property name="destinyX" type="int" value="1"/>
-    <property name="destinyY" type="int" value="5"/>
+    <property name="destinyY" type="int" value="26"/>
     <property name="direction" value="right"/>
    </properties>
   </object>

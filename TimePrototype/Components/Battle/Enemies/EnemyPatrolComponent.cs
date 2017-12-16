@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using TimePrototype.Components.Colliders;
 using TimePrototype.Components.Sprites;
 using TimePrototype.FSM;
-using TimePrototype.Scenes;
 
 namespace TimePrototype.Components.Battle.Enemies
 {
@@ -16,6 +15,16 @@ namespace TimePrototype.Components.Battle.Enemies
 
         private FiniteStateMachine<EnemyPatrolState, EnemyPatrolComponent> _fsm;
         public FiniteStateMachine<EnemyPatrolState, EnemyPatrolComponent> FSM => _fsm;
+
+        //--------------------------------------------------
+        // Cooldown
+
+        public float attackCooldown;
+
+        //--------------------------------------------------
+        // Arrows speed
+
+        protected virtual float _arrowSpeed => 800.0f;
 
         //----------------------//------------------------//
 
@@ -64,7 +73,12 @@ namespace TimePrototype.Components.Battle.Enemies
             _fsm = new FiniteStateMachine<EnemyPatrolState, EnemyPatrolComponent>(this, new EnemyPatrolWalkingState());
 
             // View range
-            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 100, 12));
+            createViewRange();
+        }
+
+        protected virtual void createViewRange()
+        {
+            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 110, 12));
         }
 
         public override void onAddedToEntity()
@@ -79,7 +93,7 @@ namespace TimePrototype.Components.Battle.Enemies
         {
             var shot = entity.scene.createEntity("projectile");
             var direction = sprite.spriteEffects == SpriteEffects.FlipHorizontally ? -1 : 1;
-            shot.addComponent(new ProjectileComponent(direction));
+            shot.addComponent(new ProjectileComponent(direction, _arrowSpeed));
             var position = entity.getComponent<BoxCollider>().absolutePosition;
             shot.transform.position = position;
         }

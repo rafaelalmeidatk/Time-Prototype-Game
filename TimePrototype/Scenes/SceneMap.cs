@@ -69,17 +69,23 @@ namespace TimePrototype.Scenes
             setupPlayer();
             setupPaths();
             setupEnemies();
-            setupEntityProcessors();
             setupNpcs();
             setupBushes();
             setupTransfers();
+        }
+
+        public override void onStart()
+        {
+            setupEntityProcessors();
+
+            getEntityProcessor<NpcInteractionSystem>().mapStart();
         }
 
         private void setupMap()
         {
             var sysManager = Core.getGlobalManager<SystemManager>();
             var mapId = sysManager.MapId;
-            _tiledMap = content.Load<TiledMap>(string.Format("maps/map{0}", mapId));
+            _tiledMap = content.Load<TiledMap>($"maps/map{mapId}");
             sysManager.setTiledMapComponent(_tiledMap);
 
             var tiledEntity = createEntity("tiled-map");

@@ -20,27 +20,39 @@ namespace TimePrototype.Components.Battle.Enemies
         public override void begin()
         {
             entity.sprite.play("walking");
-            entity.forceMovement(Vector2.UnitX * entity.currentPatrolSide);
+            entity.forceMovement(Vector2.UnitX * entity.currentPatrolSide());
         }
 
         public void switchSide()
         {
-            entity.currentPatrolSide *= -1;
-            entity.forceMovement(Vector2.UnitX * entity.currentPatrolSide);
+            entity.switchPatrolSide();
+            entity.forceMovement(Vector2.UnitX * entity.currentPatrolSide());
         }
 
         public override void update()
         {
-            if (entity.sprite.getDirection() == 1 && entity.entity.position.X > entity.path.End.X)
+            if (entity.sawThePlayer() && entity.sprite.getDirection() != entity.currentPatrolSide())
             {
                 switchSide();
             }
-            if (entity.sprite.getDirection() == -1 && entity.entity.position.X < entity.path.Start.X)
+            else if (entity.sprite.getDirection() == 1 && entity.entity.position.X > entity.path.End.X)
             {
                 switchSide();
             }
+            else if (entity.sprite.getDirection() == -1 && entity.entity.position.X < entity.path.Start.X)
+            {
+                switchSide();
+            }
+
+            if (entity.attackCooldown > 0.0)
+            {
+                entity.attackCooldown -= Time.deltaTime;
+                return;
+            }
+
             if (entity.canSeeThePlayer() && !entity.playerIsOnBush())
             {
+                entity.attackCooldown = 1.0f;
                 entity.forceMovement(Vector2.Zero);
                 fsm.pushState(new EnemyPatrolFireState());
             }
@@ -65,8 +77,7 @@ namespace TimePrototype.Components.Battle.Enemies
         {
             if (entity.sprite.Looped)
             {
-                //fsm.resetStackTo(new EnemyPatrolWalkingState());
-                fsm.popState();
+                fsm.resetStackTo(new EnemyPatrolWalkingState());
             }
         }
     }

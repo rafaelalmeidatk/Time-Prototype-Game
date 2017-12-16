@@ -77,6 +77,11 @@ namespace TimePrototype.Components.Player
         public float forcedPositionY;
 
         //--------------------------------------------------
+        // Battler
+
+        private BattleComponent _battleComponent;
+
+        //--------------------------------------------------
         // Returning in time
 
         public bool returningInTime;
@@ -154,10 +159,10 @@ namespace TimePrototype.Components.Player
             _platformerObject = entity.getComponent<PlatformerObject>();
             _platformerObject.setGetDeltaTimeFunc(GetDeltaTimeFunc);
 
-            var battleComponent = entity.getComponent<BattleComponent>();
-            battleComponent.battleEntity = this;
-            battleComponent.ImmunityDuration = 0.5f;
-            battleComponent.destroyEntityAction = destroyEntity;
+            _battleComponent = entity.getComponent<BattleComponent>();
+            _battleComponent.battleEntity = this;
+            _battleComponent.ImmunityDuration = 0.5f;
+            _battleComponent.destroyEntityAction = destroyEntity;
         }
 
         public void destroyEntity()
@@ -199,6 +204,9 @@ namespace TimePrototype.Components.Player
 
         public void update()
         {
+            // Slowdown
+            Time.timeScale = Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown ? 0.4f : 1.0f;
+
             // Update FSM
             _fsm.update();
 
@@ -303,7 +311,8 @@ namespace TimePrototype.Components.Player
 
         private bool canMove()
         {
-            return Core.getGlobalManager<InputManager>().isMovementAvailable() || _forceMovement;
+            return (Core.getGlobalManager<InputManager>().isMovementAvailable() || _forceMovement) &&
+                   !_battleComponent.Dying;
         }
 
         public bool isOnGround()

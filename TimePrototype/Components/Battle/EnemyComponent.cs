@@ -54,7 +54,8 @@ namespace TimePrototype.Components.Battle
 
         public MapPath path;
         public bool patrolStartRight;
-        public int currentPatrolSide;
+        private int _currentPatrolSide;
+        private bool _sawThePlayer;
 
         //--------------------------------------------------
         // Dangerous Stage
@@ -71,7 +72,7 @@ namespace TimePrototype.Components.Battle
         public EnemyComponent(bool patrolStartRight)
         {
             this.patrolStartRight = patrolStartRight;
-            currentPatrolSide = patrolStartRight ? -1 : 1;
+            _currentPatrolSide = patrolStartRight ? 1 : -1;
         }
 
         public override void initialize()
@@ -197,10 +198,29 @@ namespace TimePrototype.Components.Battle
             return playerCollider.entity.position.X - entity.position.X;
         }
 
+        public int currentPatrolSide()
+        {
+            return _sawThePlayer ? Math.Sign(distanceToPlayer()) : _currentPatrolSide;
+        }
+
+        public void switchPatrolSide()
+        {
+            _currentPatrolSide *= -1;
+        }
+
         public void turnToPlayer()
         {
+            _sawThePlayer = true;
             var side = distanceToPlayer();
+            _currentPatrolSide = Math.Sign(side);
             sprite.spriteEffects = side > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        }
+
+        public bool sawThePlayer()
+        {
+            if (playerIsOnBush())
+                _sawThePlayer = false;
+            return _sawThePlayer;
         }
 
         private bool canMove()

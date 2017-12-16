@@ -8,6 +8,7 @@ using Nez;
 using Nez.ECS.Components.Physics.Colliders;
 using TimePrototype.Components.Battle;
 using TimePrototype.Components.Sprites;
+using TimePrototype.Scenes;
 
 namespace TimePrototype.Systems
 {
@@ -24,6 +25,21 @@ namespace TimePrototype.Systems
 
         public override void process(Entity entity)
         {
+            var projectileComponent = entity.getComponent<ProjectileComponent>();
+            
+            var lastPosition = entity.position;
+            projectileComponent.update();
+            var newPosition = entity.position;
+            
+            var linecast = Physics.linecast(lastPosition, newPosition, 1 << SceneMap.PLAYER_LAYER);
+            if (linecast.collider != null)
+            {
+                _playerBattler.onHit(linecast.normal * -1);
+                entity.destroy();
+                return;
+            }
+
+
             CollisionResult collisionResult;
             var collider = entity.getComponent<Collider>();
 

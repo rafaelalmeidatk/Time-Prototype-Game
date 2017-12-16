@@ -46,7 +46,7 @@ namespace TimePrototype.Components.Battle.Enemies
             var shots = entity.scene.findEntitiesWithTag(SceneMap.PROJECTILES);
             var shot = entity.scene.createEntity($"shot:${shots.Count}");
             var direction = sprite.spriteEffects == SpriteEffects.FlipHorizontally ? -1 : 1;
-            shot.addComponent(new ProjectileComponent(direction));
+            shot.addComponent(new ProjectileComponent(direction, 1000));
             var position = entity.getComponent<BoxCollider>().absolutePosition;
             shot.transform.position = position;
             /*
