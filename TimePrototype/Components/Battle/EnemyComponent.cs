@@ -181,6 +181,8 @@ namespace TimePrototype.Components.Battle
         public bool canSeeThePlayer()
         {
             if (!playerCollider.entity.enabled) return false;
+            var battler = playerCollider.entity.getComponent<BattleComponent>();
+            if (battler.Dying) return false;
             CollisionResult collisionResult;
             return areaOfSight.collidesWith(playerCollider, out collisionResult);
         }

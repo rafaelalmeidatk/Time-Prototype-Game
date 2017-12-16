@@ -293,4 +293,13 @@ namespace TimePrototype.Components.Player
                 .addComponent(new HitscanComponent(start, end, false));
         }
     }
+
+    public class DyingState : PlayerState
+    {
+        public override void begin()
+        {
+            _input.IsLocked = true;
+            entity.SetAnimation(PlayerComponent.Animations.Dying);
+        }
+    }
 }

@@ -32,7 +32,6 @@ namespace TimePrototype.Systems
             }
         }
 
-
         protected override void end()
         {
             if (!_foundBush)

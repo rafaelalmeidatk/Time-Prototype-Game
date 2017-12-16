@@ -1,5 +1,4 @@
-﻿using System;
-using Nez;
+﻿using Nez;
 using TimePrototype.Components.Battle;
 using TimePrototype.Scenes;
 
@@ -16,7 +15,6 @@ namespace TimePrototype.Systems
             var raycastHit = Physics.linecast(hitscan.Start, hitscan.End, 1 << SceneMap.ENEMY_LAYER);
             if (raycastHit.collider != null)
             {
-                Console.WriteLine("hit!");
                 var battler = raycastHit.collider.entity.getComponent<BattleComponent>();
                 battler?.onHit(raycastHit.normal * -1);
             }

@@ -96,6 +96,7 @@
     <Compile Include="Systems\CollisorsSystem.cs" />
     <Compile Include="Systems\HitscanSystem.cs" />
     <Compile Include="Systems\NpcInteractionSystem.cs" />
+    <Compile Include="Systems\ProjectilesSystem.cs" />
     <Compile Include="Systems\TransferSystem.cs" />
   </ItemGroup>
   <ItemGroup>

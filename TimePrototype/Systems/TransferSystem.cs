@@ -25,12 +25,11 @@ namespace TimePrototype.Systems
         public override void process(Entity entity)
         {
             CollisionResult collisionResult;
-            if (entity.getComponent<Collider>().collidesWith(_player.getComponent<Collider>(), out collisionResult))
+            if (entity.getComponent<BoxCollider>().collidesWith(_player.getComponent<BoxCollider>(), out collisionResult))
             {
                 var sceneMap = (SceneMap)_scene;
                 sceneMap.reserveTransfer(entity.getComponent<TransferComponent>());
                 _enabled = false;
-                return;
             }
         }
     }

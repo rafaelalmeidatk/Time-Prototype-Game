@@ -64,6 +64,7 @@ namespace TimePrototype.Scenes
         public override void initialize()
         {
             addRenderer(new DefaultRenderer());
+            Core.getGlobalManager<InputManager>().IsLocked = false;
             setupMap();
             setupPlayer();
             setupPaths();
@@ -118,6 +119,7 @@ namespace TimePrototype.Scenes
             var collider = player.addComponent(new BoxCollider(-7f, -9f, 15f, 25f));
             Flags.setFlagExclusive(ref collider.physicsLayer, PLAYER_LAYER);
 
+            player.addComponent(new BattleComponent());
             player.addComponent(new PlatformerObject(_tiledMap));
             player.addComponent<TextWindowComponent>();
 
@@ -126,12 +128,6 @@ namespace TimePrototype.Scenes
 
             var playerComponent = player.addComponent<PlayerComponent>();
             playerComponent.sprite.renderLayer = PLAYER_RENDER_LAYER;
-
-            var box = createEntity("box");
-            box.transform.position = playerSpawn.Value + 100 * Vector2.UnitX;
-            box.addComponent(new TiledMapMover(_tiledMap.getLayer<TiledTileLayer>(collisionLayer)));
-            box.addComponent(new BoxCollider(-16f, -16f, 32f, 32f));
-            box.addComponent(new PlatformerObject(_tiledMap));
         }
 
         private void setupPaths()
@@ -213,8 +209,9 @@ namespace TimePrototype.Scenes
             });
 
             addEntityProcessor(new BattleSystem());
+            addEntityProcessor(new ProjectilesSystem(player));
             addEntityProcessor(new HitscanSystem());
-            addEntityProcessor(new BushSystem(findEntity("player").getComponent<PlayerComponent>()));
+            addEntityProcessor(new BushSystem(playerComponent));
 
             addEntityProcessor(new TransferSystem(new Matcher().all(typeof(TransferComponent)), player));
             addEntityProcessor(new NpcInteractionSystem(playerComponent));

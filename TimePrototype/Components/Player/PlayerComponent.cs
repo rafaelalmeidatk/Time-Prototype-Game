@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Tiled;
+using TimePrototype.Components.Battle;
 using TimePrototype.Components.GraphicComponents;
 using TimePrototype.Components.Sprites;
 using TimePrototype.FSM;
@@ -12,7 +13,7 @@ using TimePrototype.Scenes;
 
 namespace TimePrototype.Components.Player
 {
-    public class PlayerComponent : Component, IUpdatable
+    public class PlayerComponent : Component, IUpdatable, IBattleEntity
     {
         //--------------------------------------------------
         // Animations
@@ -21,7 +22,8 @@ namespace TimePrototype.Components.Player
         {
             Stand,
             Walking,
-            Shot
+            Shot,
+            Dying
         }
 
         private Dictionary<Animations, string> _animationMap;
@@ -106,6 +108,7 @@ namespace TimePrototype.Components.Player
                 {Animations.Stand, "stand"},
                 {Animations.Walking, "walking"},
                 {Animations.Shot, "shot"},
+                {Animations.Dying, "dying"},
             };
 
             var am = _animationMap;
@@ -133,6 +136,13 @@ namespace TimePrototype.Components.Player
                 new Rectangle(32, 0, 32, 32),
             });
 
+            sprite.CreateAnimation(am[Animations.Dying], 0.1f);
+            sprite.AddFrames(am[Animations.Dying], new List<Rectangle>()
+            {
+                new Rectangle(0, 0, 32, 32),
+                new Rectangle(0, 0, 32, 32),
+            });
+
             // init fsm
             _fsm = new FiniteStateMachine<PlayerState, PlayerComponent>(this, new StandState());
         }
@@ -143,12 +153,29 @@ namespace TimePrototype.Components.Player
 
             _platformerObject = entity.getComponent<PlatformerObject>();
             _platformerObject.setGetDeltaTimeFunc(GetDeltaTimeFunc);
+
+            var battleComponent = entity.getComponent<BattleComponent>();
+            battleComponent.battleEntity = this;
+            battleComponent.ImmunityDuration = 0.5f;
+            battleComponent.destroyEntityAction = destroyEntity;
         }
 
         public void destroyEntity()
         {
             entity.setEnabled(false);
             Core.startSceneTransition(new SquaresTransition(() => new SceneMap()));
+        }
+
+        public void onHit(Vector2 knockback)
+        {
+            //(entity.scene as SceneMap)?.startScreenShake(1, 200);
+            _knockbackTick = new Vector2(0.06f, 0.04f);
+            _knockbackVelocity = new Vector2(knockback.X * 60, -5);
+        }
+
+        public void onDeath()
+        {
+            FSM.changeState(new DyingState());
         }
 
         public void forceMovement(Vector2 velocity, bool walljumpForcedMovement = false)
