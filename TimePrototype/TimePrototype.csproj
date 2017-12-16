@@ -89,6 +89,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\SceneMap.cs" />
+    <Compile Include="Structs\MapPath.cs" />
     <Compile Include="Systems\BattleSystem.cs" />
     <Compile Include="Systems\BushSystem.cs" />
     <Compile Include="Systems\CameraSystem.cs" />

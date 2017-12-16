@@ -14,6 +14,7 @@ using TimePrototype.Components.Player;
 using TimePrototype.Components.Windows;
 using TimePrototype.Managers;
 using TimePrototype.NPCs;
+using TimePrototype.Structs;
 using TimePrototype.Systems;
 
 namespace TimePrototype.Scenes
@@ -53,6 +54,11 @@ namespace TimePrototype.Scenes
         private TiledMapComponent _tiledMapComponent;
         private TiledMap _tiledMap;
 
+        //--------------------------------------------------
+        // Paths
+
+        private MapPath[] _paths;
+
         //----------------------//------------------------//
 
         public override void initialize()
@@ -60,6 +66,7 @@ namespace TimePrototype.Scenes
             addRenderer(new DefaultRenderer());
             setupMap();
             setupPlayer();
+            setupPaths();
             setupEnemies();
             setupEntityProcessors();
             setupNpcs();
@@ -127,6 +134,25 @@ namespace TimePrototype.Scenes
             box.addComponent(new PlatformerObject(_tiledMap));
         }
 
+        private void setupPaths()
+        {
+            var pathObjectGroup = _tiledMap.getObjectGroup("paths");
+            if (pathObjectGroup == null) return;
+
+            var objects = pathObjectGroup.objects;
+
+            _paths = new MapPath[objects.Length];
+            for (var i = 0; i < objects.Length; i++)
+            {
+                _paths[i] = new MapPath
+                {
+                    Name = objects[i].name,
+                    Start = objects[i].position,
+                    End = objects[i].position + new Vector2(objects[i].width, objects[i].height)
+                };
+            }
+        }
+
         private void setupEnemies()
         {
             var collisionLayer = _tiledMap.properties["collisionLayer"];
@@ -141,18 +167,22 @@ namespace TimePrototype.Scenes
                 entity.addComponent<BattleComponent>();
                 var collider = entity.addComponent(new BoxCollider(-16f, -16f, 32f, 32f));
                 Flags.setFlagExclusive(ref collider.physicsLayer, ENEMY_LAYER);
-                Console.WriteLine($"enemy flag: {collider.physicsLayer}");
 
                 var patrolStartRight = bool.Parse(enemy.properties.ContainsKey("patrolStartRight")
                     ? enemy.properties["patrolStartRight"]
                     : "false");
+
                 var instance = createEnemyInstance(enemy.type, patrolStartRight);
                 var enemyComponent = entity.addComponent(instance);
                 enemyComponent.sprite.renderLayer = ENEMIES_RENDER_LAYER;
                 enemyComponent.playerCollider = findEntity("player").getComponent<BoxCollider>();
-                enemyComponent.patrolTime = float.Parse(enemy.properties.ContainsKey("patrolTime")
-                    ? enemy.properties["patrolTime"]
-                    : "0");
+
+                if (enemy.properties.ContainsKey("path"))
+                {
+                    var pathName = enemy.properties["path"];
+                    var path = _paths.First(x => x.Name == pathName);
+                    enemyComponent.path = path;
+                }
 
                 entity.transform.position = enemy.position + new Vector2(enemy.width, enemy.height) / 2;
             }

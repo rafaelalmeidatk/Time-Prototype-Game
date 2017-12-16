@@ -88,6 +88,7 @@ namespace TimePrototype.Components.Player
         // Is on bush
 
         public bool isOnBush;
+        public bool isInsideBush;
 
         //--------------------------------------------------
         // Can take damage

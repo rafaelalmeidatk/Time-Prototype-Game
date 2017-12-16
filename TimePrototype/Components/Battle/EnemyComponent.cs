@@ -5,6 +5,7 @@ using Nez;
 using TimePrototype.Components.Colliders;
 using TimePrototype.Components.Player;
 using TimePrototype.Components.Sprites;
+using TimePrototype.Structs;
 
 namespace TimePrototype.Components.Battle
 {
@@ -51,8 +52,9 @@ namespace TimePrototype.Components.Battle
         //--------------------------------------------------
         // Patrol
 
-        public float patrolTime;
+        public MapPath path;
         public bool patrolStartRight;
+        public int currentPatrolSide;
 
         //--------------------------------------------------
         // Dangerous Stage
@@ -69,6 +71,7 @@ namespace TimePrototype.Components.Battle
         public EnemyComponent(bool patrolStartRight)
         {
             this.patrolStartRight = patrolStartRight;
+            currentPatrolSide = patrolStartRight ? -1 : 1;
         }
 
         public override void initialize()
@@ -184,12 +187,18 @@ namespace TimePrototype.Components.Battle
 
         public bool playerIsOnBush()
         {
-            return playerCollider.entity.getComponent<PlayerComponent>().isOnBush;
+            return playerCollider.entity.getComponent<PlayerComponent>().isInsideBush;
         }
 
         public float distanceToPlayer()
         {
             return playerCollider.entity.position.X - entity.position.X;
+        }
+
+        public void turnToPlayer()
+        {
+            var side = distanceToPlayer();
+            sprite.spriteEffects = side > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
 
         private bool canMove()

@@ -42,6 +42,12 @@ namespace TimePrototype.Components.Battle.Enemies
                 new Rectangle(0, 0, 32, 32),
             });
 
+            sprite.CreateAnimation("fire", 0.15f);
+            sprite.AddFrames("fire", new List<Rectangle>
+            {
+                new Rectangle(32, 0, 32, 32),
+            });
+
             sprite.CreateAnimation("hit", 0.1f, false);
             sprite.AddFrames("hit", new List<Rectangle>
             {
@@ -58,7 +64,7 @@ namespace TimePrototype.Components.Battle.Enemies
             _fsm = new FiniteStateMachine<EnemyPatrolState, EnemyPatrolComponent>(this, new EnemyPatrolWalkingState());
 
             // View range
-            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 92, 32));
+            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 120, 12));
         }
 
         public override void onAddedToEntity()
@@ -67,6 +73,15 @@ namespace TimePrototype.Components.Battle.Enemies
             // Change move speed
             platformerObject.maxMoveSpeed = 60;
             platformerObject.moveSpeed = 60;
+        }
+
+        public void shoot()
+        {
+            var shot = entity.scene.createEntity("projectile");
+            var direction = sprite.spriteEffects == SpriteEffects.FlipHorizontally ? -1 : 1;
+            shot.addComponent(new ProjectileComponent(direction));
+            var position = entity.getComponent<BoxCollider>().absolutePosition;
+            shot.transform.position = position;
         }
 
         public override void onHit(Vector2 knockback)

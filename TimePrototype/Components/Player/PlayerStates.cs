@@ -226,6 +226,8 @@ namespace TimePrototype.Components.Player
 
         public override void begin()
         {
+            entity.isInsideBush = true;
+
             entity.sprite.setEnabled(false);
             _input.IsLocked = true;
 
@@ -253,6 +255,8 @@ namespace TimePrototype.Components.Player
 
         public override void end()
         {
+            entity.isInsideBush = false;
+
             _bushSprite.setSubtexture(new Subtexture(entity.entity.scene.content.Load<Texture2D>(Content.Misc.bush)));
             entity.sprite.setEnabled(true);
             _input.IsLocked = false;

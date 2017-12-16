@@ -42,7 +42,7 @@ namespace TimePrototype.Components.Battle
             var collider = entity.addComponent(new BoxCollider(-6, -2, 12, 5));
             Flags.setFlagExclusive(ref collider.physicsLayer, SceneMap.PROJECTILES_LAYER);
 
-            _speed = _type == 1 ? 100f : 300f;
+            _speed = 1000f;
             
             if (_direction < 0)
             {
