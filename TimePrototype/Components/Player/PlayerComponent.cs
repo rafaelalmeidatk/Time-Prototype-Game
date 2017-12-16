@@ -102,6 +102,11 @@ namespace TimePrototype.Components.Player
 
         public virtual bool canTakeDamage => true;
 
+        //--------------------------------------------------
+        // Is with key
+
+        public bool isWithKey;
+
         //----------------------//------------------------//
 
         public override void initialize()

@@ -95,8 +95,9 @@
     <Compile Include="Systems\BattleSystem.cs" />
     <Compile Include="Systems\BushSystem.cs" />
     <Compile Include="Systems\CameraSystem.cs" />
-    <Compile Include="Systems\CollisorsSystem.cs" />
+    <Compile Include="Systems\DoorSystem.cs" />
     <Compile Include="Systems\HitscanSystem.cs" />
+    <Compile Include="Systems\KeySystem.cs" />
     <Compile Include="Systems\NpcInteractionSystem.cs" />
     <Compile Include="Systems\ProjectilesSystem.cs" />
     <Compile Include="Systems\TransferSystem.cs" />

@@ -71,6 +71,8 @@ namespace TimePrototype.Scenes
             setupEnemies();
             setupNpcs();
             setupBushes();
+            setupDoors();
+            setupKeys();
             setupTransfers();
         }
 
@@ -218,6 +220,9 @@ namespace TimePrototype.Scenes
             addEntityProcessor(new ProjectilesSystem(player));
             addEntityProcessor(new HitscanSystem());
             addEntityProcessor(new BushSystem(playerComponent));
+            addEntityProcessor(new DoorSystem(findEntity("door"), player));
+            var key = findEntity("key");
+            addEntityProcessor(new KeySystem(key, player));
 
             addEntityProcessor(new TransferSystem(new Matcher().all(typeof(TransferComponent)), player));
             addEntityProcessor(new NpcInteractionSystem(playerComponent));
@@ -275,6 +280,34 @@ namespace TimePrototype.Scenes
 
                 entity.setPosition(bushObj.position + new Vector2(bushObj.width, bushObj.height) / 2 + 7 * Vector2.UnitY);
             }
+        }
+
+        private void setupDoors()
+        {
+            var objectGroup = _tiledMap.getObjectGroup("objects");
+            var doorObj = objectGroup?.objectsWithType("door");
+            if (doorObj.Count == 0) return;
+
+            var entity = createEntity("door");
+            entity
+                .addComponent(new BoxCollider(-16, -32, 32, 64))
+                .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.door)));
+
+            entity.setPosition(doorObj[0].position + new Vector2(doorObj[0].width, doorObj[0].height) / 2);
+        }
+
+        private void setupKeys()
+        {
+            var objectGroup = _tiledMap.getObjectGroup("objects");
+            var keyObj = objectGroup?.objectsWithType("key");
+            if (keyObj.Count == 0) return;
+
+            var entity = createEntity("key");
+            entity
+                .addComponent(new BoxCollider(-6, -3, 12, 6))
+                .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.key)));
+
+            entity.setPosition(keyObj[0].position + new Vector2(keyObj[0].width, keyObj[0].height) / 2);
         }
 
         private void setupTransfers()
