@@ -64,15 +64,15 @@ namespace TimePrototype.Components.Battle.Enemies
             _fsm = new FiniteStateMachine<EnemyPatrolState, EnemyPatrolComponent>(this, new EnemyPatrolWalkingState());
 
             // View range
-            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 120, 12));
+            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 100, 12));
         }
 
         public override void onAddedToEntity()
         {
             base.onAddedToEntity();
             // Change move speed
-            platformerObject.maxMoveSpeed = 60;
-            platformerObject.moveSpeed = 60;
+            platformerObject.maxMoveSpeed = 4500;
+            platformerObject.moveSpeed = 4500;
         }
 
         public void shoot()

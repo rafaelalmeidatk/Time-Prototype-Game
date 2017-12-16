@@ -20,7 +20,6 @@ namespace TimePrototype.Components.Battle
 
         private int _direction;
         private float _speed;
-        private int _type;
 
         //----------------------//------------------------//
 
