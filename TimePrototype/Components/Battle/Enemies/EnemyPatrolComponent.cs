@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TimePrototype.Components.Colliders;
 using TimePrototype.Components.Sprites;
 using TimePrototype.FSM;
+using TimePrototype.Scenes;
 
 namespace TimePrototype.Components.Battle.Enemies
 {
@@ -70,16 +71,14 @@ namespace TimePrototype.Components.Battle.Enemies
 
         public override void onHit(Vector2 knockback)
         {
-            if (dangerousStage <= 1)
-            {
-                //(entity.scene as SceneMap)?.startScreenShake(0.7f, 100);
-                base.onHit(knockback);
-                //FSM.changeState(new EnemyOneHitState());
-            }
+            //(entity.scene as SceneMap)?.startScreenShake(0.7f, 100);
+            base.onHit(knockback);
+            //FSM.changeState(new EnemyOneHitState());
         }
 
         public override void onDeath()
         {
+            base.onDeath();
             //FSM.changeState(new EnemyOneDyingState());
         }
 

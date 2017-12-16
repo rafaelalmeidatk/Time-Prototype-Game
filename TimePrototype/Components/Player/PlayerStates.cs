@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
@@ -119,41 +120,67 @@ namespace TimePrototype.Components.Player
 
     public class ReturnInTimeState : PlayerState
     {
-        private bool casted;
-        public float delay;
+        private bool _casted;
+        private bool _castedAttack;
+        private float _delay;
+
+        private Vector2 _start;
+        private Vector2 _end;
 
         private const float ReturnDuration = 0.3f;
 
+        private TrailRibbon _trailRibbon;
+
         public override void begin()
         {
+            entity.entity.removeComponent<TrailRibbon>();
+            _trailRibbon = entity.entity.addComponent(new TrailRibbon {ribbonRadius = 9, startColor = Color.WhiteSmoke, endColor = Color.White});
+            _trailRibbon.ribbonsToDraw = 1;
+
             entity.returningInTime = true;
             entity.fadeTail();
         }
 
         public override void update()
         {
-            if (!casted)
+            if (!_casted)
             {
-                casted = true;
+                _casted = true;
 
                 var position = entity.getComponent<TimedSpriteTail>().lastInstancePosition();
                 if (position != Vector2.Zero)
                 {
+                    _start = entity.entity.position;
+                    _end = position;
+
                     entity.forcePosition = true;
                     entity.forcedPositionX = entity.entity.position.X;
                     entity.forcedPositionY = entity.entity.position.Y;
                     entity.tween("forcedPositionX", position.X, ReturnDuration).setEaseType(EaseType.ExpoInOut).start();
                     entity.tween("forcedPositionY", position.Y, ReturnDuration).setEaseType(EaseType.ExpoInOut).start();
 
-                    delay = ReturnDuration;
+                    _trailRibbon.tween("ribbonsToDraw", 0.0f, 4f).setEaseType(EaseType.ExpoOut).start();
+
+                    _delay = ReturnDuration;
                 }
 
                 return;
             }
 
-            if (delay > 0.0f)
+            if (_delay > 0.0f)
             {
-                delay -= Time.unscaledDeltaTime;
+                _delay -= Time.unscaledDeltaTime;
+                if (!_castedAttack && _delay <= ReturnDuration / 2)
+                {
+                    _castedAttack = true;
+                    var hits = new RaycastHit[10];
+                    var affected = Physics.linecastAll(_start, _end, hits, 1 << SceneMap.ENEMY_LAYER);
+                    for (var i = 0; i < affected; i++)
+                    {
+                        var enemy = hits[i].collider.entity.getComponent<BattleComponent>();
+                        enemy.onHit(hits[i].normal);
+                    }
+                }
             }
             else
             {
@@ -163,6 +190,7 @@ namespace TimePrototype.Components.Player
 
         public override void end()
         {
+            _trailRibbon.fixPosition = entity.entity.position;
             entity.returningInTime = false;
             entity.platformerObject.velocity = Vector2.Zero;
             entity.forcePosition = false;
@@ -217,7 +245,7 @@ namespace TimePrototype.Components.Player
 
         public override void update()
         {
-            if (_input.BushButton.isPressed)
+            if (_input.BushButton.isPressed || _input.JumpButton.isPressed)
             {
                 fsm.resetStackTo(new StandState());
             }

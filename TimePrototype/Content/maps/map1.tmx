@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" nextobjectid="9">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" nextobjectid="12">
  <properties>
   <property name="collisionLayer" value="collision"/>
   <property name="defaultLayers" value="collision"/>
@@ -62,7 +62,7 @@
 </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="playerSpawn" x="75.1667" y="741.833"/>
+  <object id="1" name="playerSpawn" x="265.167" y="696.5"/>
  </objectgroup>
  <objectgroup name="transfers">
   <object id="5" name="To Village" type="onTouch" x="314" y="-14.6667" width="4" height="160">
@@ -75,14 +75,14 @@
   </object>
  </objectgroup>
  <objectgroup name="enemies">
-  <object id="2" name="EnemyPlaceholder" type="EnemyPlaceholder" x="287.333" y="734.667" width="32" height="32"/>
-  <object id="8" name="EnemyPlaceholder" type="EnemyPatrol" x="170.667" y="706" width="32" height="32">
+  <object id="2" name="EnemyPlaceholder" type="EnemyPlaceholder" x="402" y="561.333" width="32" height="32"/>
+  <object id="8" name="EnemyPatrol" type="EnemyPatrol" x="48" y="736" width="32" height="32">
    <properties>
     <property name="patrolTime" type="float" value="2"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="bushes">
-  <object id="7" x="112" y="736" width="32" height="32"/>
+ <objectgroup color="#005500" name="bushes">
+  <object id="11" name="Bush" x="128" y="736" width="32" height="32"/>
  </objectgroup>
 </map>

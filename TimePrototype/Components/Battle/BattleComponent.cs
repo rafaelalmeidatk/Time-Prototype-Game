@@ -91,6 +91,8 @@ namespace TimePrototype.Components.Battle
             _hitAnimation = 0.25f;
             ImmunityTime = ImmunityDuration;
 
+            Console.WriteLine("hit");
+
             _hp--;
             if (_hp <= 0)
             {

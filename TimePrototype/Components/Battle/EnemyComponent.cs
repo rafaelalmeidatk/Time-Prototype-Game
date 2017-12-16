@@ -81,7 +81,7 @@ namespace TimePrototype.Components.Battle
             _platformerObject = entity.getComponent<PlatformerObject>();
 
             _battleComponent = entity.getComponent<BattleComponent>();
-            _battleComponent.setHp(40);
+            _battleComponent.setHp(1);
             _battleComponent.battleEntity = this;
         }
 
@@ -107,7 +107,7 @@ namespace TimePrototype.Components.Battle
         {
             Console.WriteLine("on hit");
             _knockbackTick = new Vector2(0.06f, 0.1f);
-            _knockbackVelocity = new Vector2(knockback.X * 60, -5);
+            _knockbackVelocity = new Vector2(knockback.X * 100, -5);
         }
 
         public virtual void onDeath() { }
