@@ -50,9 +50,12 @@
     <Compile Include="Components\Battle\Enemies\EnemyPatrolStates.cs" />
     <Compile Include="Components\Battle\Enemies\EnemyPlaceholderComponent.cs" />
     <Compile Include="Components\Battle\Enemies\EnemySniperComponent.cs" />
+    <Compile Include="Components\Battle\Traps\ProjectileTrapComponent.cs" />
     <Compile Include="Components\Battle\EnemyComponent.cs" />
     <Compile Include="Components\Battle\HitscanComponent.cs" />
     <Compile Include="Components\Battle\ProjectileComponent.cs" />
+    <Compile Include="Components\Battle\Traps\TrapActivatorComponent.cs" />
+    <Compile Include="Components\Battle\Traps\TrapComponent.cs" />
     <Compile Include="Components\Colliders\AreaOfSightCollider.cs" />
     <Compile Include="Components\Colliders\AttackCollider.cs" />
     <Compile Include="Components\Colliders\HurtCollider.cs" />
@@ -92,7 +95,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\SceneMap.cs" />
+    <Compile Include="Structs\MapActivator.cs" />
     <Compile Include="Structs\MapPath.cs" />
+    <Compile Include="Systems\ActivatorsSystem.cs" />
     <Compile Include="Systems\BattleSystem.cs" />
     <Compile Include="Systems\BushSystem.cs" />
     <Compile Include="Systems\CameraSystem.cs" />

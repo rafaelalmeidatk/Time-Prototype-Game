@@ -3,7 +3,7 @@ using TimePrototype.Components.Player;
 
 namespace TimePrototype.Systems
 {
-    class KeySystem : ProcessingSystem
+    public class KeySystem : ProcessingSystem
     {
         private bool _enabled;
 
@@ -27,10 +27,8 @@ namespace TimePrototype.Systems
             if (_key.getComponent<BoxCollider>()
                 .collidesWith(_player.getComponent<BoxCollider>(), out collisionResult))
             {
-                var playerComponent = _player.getComponent<PlayerComponent>();
-                playerComponent.isWithKey = true;
+                _player.getComponent<PlayerComponent>().isWithKey = true;
                 _key.destroy();
-
                 _enabled = false;
             }
         }

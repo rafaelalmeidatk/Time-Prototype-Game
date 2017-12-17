@@ -31,15 +31,17 @@ namespace TimePrototype.Components.Battle.Enemies
 
         public override void update()
         {
-            if (entity.sawThePlayer() && entity.sprite.getDirection() != entity.currentPatrolSide())
+            if (entity.sprite.getDirection() == 1 && entity.entity.position.X > entity.path.End.X)
             {
                 switchSide();
-            }
-            else if (entity.sprite.getDirection() == 1 && entity.entity.position.X > entity.path.End.X)
-            {
-                switchSide();
+                entity.unseeThePlayer();
             }
             else if (entity.sprite.getDirection() == -1 && entity.entity.position.X < entity.path.Start.X)
+            {
+                switchSide();
+                entity.unseeThePlayer();
+            }
+            else if (entity.sawThePlayer() && entity.sprite.getDirection() != entity.currentPatrolSide())
             {
                 switchSide();
             }

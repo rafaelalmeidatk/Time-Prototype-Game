@@ -8,6 +8,8 @@ using Nez.Sprites;
 using Nez.Tiled;
 using TimePrototype.Components;
 using TimePrototype.Components.Battle;
+using TimePrototype.Components.Battle.Enemies;
+using TimePrototype.Components.Battle.Traps;
 using TimePrototype.Components.GraphicComponents;
 using TimePrototype.Components.Map;
 using TimePrototype.Components.Player;
@@ -47,6 +49,7 @@ namespace TimePrototype.Scenes
 
         public const int PROJECTILES = 1;
         public const int BUSHES = 2;
+        public const int TRAPS = 3;
 
         //--------------------------------------------------
         // Map
@@ -58,6 +61,11 @@ namespace TimePrototype.Scenes
         // Paths
 
         private MapPath[] _paths;
+
+        //--------------------------------------------------
+        // Traps activators
+
+        private MapActivator[] _activators;
 
         //--------------------------------------------------
         // HUD
@@ -77,6 +85,7 @@ namespace TimePrototype.Scenes
             setupPlayer();
             setupPaths();
             setupEnemies();
+            setupTraps();
             setupNpcs();
             setupBushes();
             setupDoors();
@@ -205,6 +214,31 @@ namespace TimePrototype.Scenes
             }
         }
 
+        private void setupTraps()
+        {
+            var trapsObjectGroup = _tiledMap.getObjectGroup("traps");
+            if (trapsObjectGroup == null) return;
+            foreach (var trap in trapsObjectGroup.objects)
+            {
+                var entity = createEntity("trap");
+                switch (trap.type)
+                {
+                    case "activator":
+                        entity
+                            .addComponent(new TrapActivatorComponent(trap.name))
+                            .addComponent(new BoxCollider(-8, -4, 16, 5))
+                            .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.activator)))
+                            .transform.position = 7 * Vector2.UnitY;
+                        break;
+                    case "projectile":
+                        var rotation = Mathf.deg2Rad * trap.rotation;
+                        entity.addComponent(new ProjectileTrapComponent(trap.properties["activator"], 0, rotation));
+                        break;
+                }
+                entity.transform.position = entity.position + trap.position + new Vector2(trap.width, trap.height) / 2;
+            }
+        }
+
         private EnemyComponent createEnemyInstance(string enemyName, bool patrolStartRight)
         {
             var enemiesNamespace = typeof(BattleComponent).Namespace + ".Enemies";
@@ -236,6 +270,7 @@ namespace TimePrototype.Scenes
             addEntityProcessor(new DoorSystem(findEntity("door"), player));
             var key = findEntity("key");
             addEntityProcessor(new KeySystem(key, player));
+            addEntityProcessor(new ActivatorsSystem());
 
             addEntityProcessor(new TransferSystem(new Matcher().all(typeof(TransferComponent)), player));
             addEntityProcessor(new NpcInteractionSystem(playerComponent));

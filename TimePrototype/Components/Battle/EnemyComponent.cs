@@ -223,6 +223,11 @@ namespace TimePrototype.Components.Battle
             return _sawThePlayer;
         }
 
+        public void unseeThePlayer()
+        {
+            _sawThePlayer = false;
+        }
+
         private bool canMove()
         {
             return !_battleComponent.Dying;

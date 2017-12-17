@@ -16,17 +16,19 @@ namespace TimePrototype.Components.Battle
         public AnimatedSprite sprite;
 
         //--------------------------------------------------
-        // Direction, Speed and Type
+        // Direction, Speed and Rotation
 
         private readonly int _direction;
         private readonly float _speed;
+        private readonly float _rotation;
 
         //----------------------//------------------------//
 
-        public ProjectileComponent(int direction, float speed)
+        public ProjectileComponent(int direction, float speed, float rotation = 0.0f)
         {
             _direction = direction;
             _speed = speed;
+            _rotation = rotation;
         }
 
         public override void initialize()
@@ -46,11 +48,14 @@ namespace TimePrototype.Components.Battle
             {
                 sprite.spriteEffects = SpriteEffects.FlipHorizontally;
             }
+
+            sprite.entity.setRotation(_rotation);
+            sprite.renderLayer = SceneMap.MISC_RENDER_LAYER;
         }
 
         public override void onAddedToEntity()
         {
-            entity.setTag(SceneMap.PROJECTILES_LAYER);
+            entity.setTag(SceneMap.PROJECTILES);
         }
 
         public void update()

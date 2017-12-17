@@ -240,3 +240,42 @@
 /processorParam:TextureFormat=Color
 /build:misc/timer.png
 
+#begin maps/map6.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map6.tmx
+
+#begin misc/projectile_trap.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:misc/projectile_trap.png
+
+#begin misc/activator.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:misc/activator.png
+
+#begin maps/map7.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map7.tmx
+
+#begin maps/map8.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map8.tmx
+
