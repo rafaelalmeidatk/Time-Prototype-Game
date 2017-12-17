@@ -62,8 +62,8 @@ namespace TimePrototype.Components.Battle
         {
             var scale = Time.timeScale < 1 ? 0.1f : Time.timeScale;
             var deltaTime = Time.unscaledDeltaTime * scale;
-            var velx = (float)Math.Cos(entity.transform.rotation) * _speed * _direction * deltaTime;
-            var vely = (float)Math.Sin(entity.transform.rotation * _direction) * _speed * deltaTime + 0.4f;
+            var velx = Mathf.cos(entity.transform.rotation) * _speed * _direction * deltaTime;
+            var vely = Mathf.sin(entity.transform.rotation * _direction) * _speed * deltaTime + 0.4f;
             var vel = new Vector2(velx, vely);
             entity.setPosition(entity.position + vel);
         }

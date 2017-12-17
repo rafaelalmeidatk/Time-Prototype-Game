@@ -18,13 +18,27 @@ namespace TimePrototype.Components.Battle.Traps
         public string activatorName;
 
         //--------------------------------------------------
+        // Automatic
+
+        public bool isAuto;
+        public float delay;
+
+        //--------------------------------------------------
         // Cooldown
 
         public float cooldown;
 
-        protected TrapComponent(string activatorName)
+        //----------------------//------------------------//
+
+        protected TrapComponent(string activatorName, bool isAuto, float delay = 0.0f)
         {
             this.activatorName = activatorName;
+            this.isAuto = isAuto;
+            this.delay = delay;
+            if (isAuto)
+            {
+                cooldown = delay;
+            }
         }
 
         public override void onAddedToEntity()
@@ -37,7 +51,14 @@ namespace TimePrototype.Components.Battle.Traps
         public void update()
         {
             if (cooldown > 0.0f)
+            {
                 cooldown -= Time.deltaTime;
+                if (isAuto && cooldown <= 0.0f)
+                {
+                    cooldown = delay;
+                    doAction();
+                }
+            }
         }
     }
 }

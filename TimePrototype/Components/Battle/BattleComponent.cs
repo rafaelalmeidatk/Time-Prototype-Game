@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
@@ -76,22 +77,20 @@ namespace TimePrototype.Components.Battle
             _hp = hp;
         }
 
-        public void onHit(CollisionResult collisionResult)
+        public bool onHit(CollisionResult collisionResult)
         {
             var knockback = new Vector2(Math.Sign(collisionResult.minimumTranslationVector.X), 0);
-            onHit(knockback);
+            return onHit(knockback);
         }
 
-        public void onHit(Vector2 knockback)
+        public bool onHit(Vector2 knockback)
         {
-            if (_dying || ImmunityTime > 0.0f || battleEntity != null && !battleEntity.canTakeDamage) return;
+            if (_dying || ImmunityTime > 0.0f || battleEntity != null && !battleEntity.canTakeDamage) return false;
 
             knockback *= Vector2.UnitX;
             battleEntity?.onHit(knockback);
             _hitAnimation = 0.25f;
             ImmunityTime = ImmunityDuration;
-
-            Console.WriteLine("hit");
 
             _hp--;
             if (_hp <= 0)
@@ -101,6 +100,8 @@ namespace TimePrototype.Components.Battle
                 _deathTime = DeathDuration;
                 battleEntity?.onDeath();
             }
+
+            return true;
         }
 
         public void update()

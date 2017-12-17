@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="30" height="19" tilewidth="16" tileheight="16" nextobjectid="77">
+ <properties>
+  <property name="collisionLayer" value="collision"/>
+  <property name="defaultLayers" value="collision"/>
+ </properties>
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="tileset.png" width="16" height="16"/>
+ </tileset>
+ <layer name="collision" width="30" height="19">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="38" name="playerSpawn" x="19.5" y="51.5"/>
+  <object id="63" name="Key" type="key" x="80" y="144" width="48" height="32"/>
+ </objectgroup>
+ <objectgroup name="npcs"/>
+ <objectgroup name="transfers">
+  <object id="5" name="Transfer" type="onTouch" x="464" y="-16" width="4" height="96">
+   <properties>
+    <property name="destinyId" type="int" value="2"/>
+    <property name="destinyX" type="int" value="1"/>
+    <property name="destinyY" type="int" value="5"/>
+    <property name="direction" value="right"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemies">
+  <object id="74" name="EnemyPatrol" type="EnemyPatrol" x="272" y="32" width="32" height="32">
+   <properties>
+    <property name="path" value="path1"/>
+    <property name="patrolStartRight" type="bool" value="true"/>
+    <property name="patrolTime" type="float" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="traps">
+  <object id="64" name="Trap" type="projectile" x="119" y="208" width="16" height="16" rotation="180">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="65" name="ac1" type="activator" x="88" y="207.5" width="32" height="16"/>
+  <object id="66" name="Key" type="key" x="88" y="209.5" width="32" height="14"/>
+  <object id="67" name="Trap" type="projectile" x="119" y="176" width="16" height="16" rotation="180">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="68" name="Trap" type="projectile" x="74" y="192" width="16" height="16">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="69" name="Trap" type="projectile" x="74" y="160" width="16" height="16">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#005500" name="bushes">
+  <object id="75" name="Bush" x="272" y="32" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="paths">
+  <object id="73" name="path1" x="176" y="48" width="224" height="2.66667"/>
+  <object id="76" name="Door" type="door" x="448" y="0" width="32" height="64"/>
+ </objectgroup>
+</map>

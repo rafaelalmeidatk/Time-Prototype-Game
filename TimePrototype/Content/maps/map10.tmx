@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="35" height="22" tilewidth="16" tileheight="16" nextobjectid="95">
+ <properties>
+  <property name="collisionLayer" value="collision"/>
+  <property name="defaultLayers" value="collision"/>
+ </properties>
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="tileset.png" width="16" height="16"/>
+ </tileset>
+ <layer name="collision" width="35" height="22">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,
+0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="38" name="playerSpawn" x="16" y="96"/>
+  <object id="79" name="Key" type="key" x="288" y="242" width="32" height="14"/>
+ </objectgroup>
+ <objectgroup name="npcs"/>
+ <objectgroup name="transfers">
+  <object id="5" name="Transfer" type="onTouch" x="544" y="32" width="4" height="96">
+   <properties>
+    <property name="destinyId" type="int" value="2"/>
+    <property name="destinyX" type="int" value="1"/>
+    <property name="destinyY" type="int" value="5"/>
+    <property name="direction" value="right"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemies"/>
+ <objectgroup name="traps">
+  <object id="65" name="ac1" type="activator" x="288" y="240" width="32" height="16"/>
+  <object id="69" name="Trap" type="projectile" x="288" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="81" name="Trap" type="projectile" x="224" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="82" name="Trap" type="projectile" x="256" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="83" name="Trap" type="projectile" x="192" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="84" name="Trap" type="projectile" x="320" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="86" name="Trap" type="projectile" x="304" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="87" name="Trap" type="projectile" x="272" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="88" name="Trap" type="projectile" x="240" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="89" name="Trap" type="projectile" x="208" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="90" name="Trap" type="projectile" x="176" y="138" width="16" height="16" rotation="-270">
+   <properties>
+    <property name="activator" value="ac1"/>
+   </properties>
+  </object>
+  <object id="92" name="Trap" type="projectile" x="407" y="80" width="16" height="16" rotation="180">
+   <properties>
+    <property name="auto" type="bool" value="true"/>
+    <property name="delay" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="93" name="Trap" type="projectile" x="439" y="64" width="16" height="16" rotation="180">
+   <properties>
+    <property name="auto" type="bool" value="true"/>
+    <property name="delay" type="float" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#005500" name="bushes">
+  <object id="75" name="Bush" x="272" y="80" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="paths">
+  <object id="76" name="Door" type="door" x="528" y="48" width="32" height="64"/>
+ </objectgroup>
+</map>

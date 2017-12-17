@@ -100,7 +100,7 @@ namespace TimePrototype.Components.Player
         //--------------------------------------------------
         // Can take damage
 
-        public virtual bool canTakeDamage => true;
+        public virtual bool canTakeDamage => !returningInTime && !isInsideBush;
 
         //--------------------------------------------------
         // Is with key
@@ -203,6 +203,7 @@ namespace TimePrototype.Components.Player
 
         public void onHit(Vector2 knockback)
         {
+            if (returningInTime) return;
             //(entity.scene as SceneMap)?.startScreenShake(1, 200);
             _knockbackTick = new Vector2(0.06f, 0.04f);
             _knockbackVelocity = new Vector2(knockback.X * 60, -5);
@@ -235,7 +236,7 @@ namespace TimePrototype.Components.Player
         public void update()
         {
             // Slowdown
-            if (Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown && _slowdownPower > 0.0f)
+            if (Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown && canSlowdownTime())
             {
                 Time.timeScale = 0.4f;
                 _slowdownPower -= Time.unscaledDeltaTime;
@@ -385,6 +386,11 @@ namespace TimePrototype.Components.Player
         public bool isOnGround()
         {
             return ForcedGround || _platformerObject.collisionState.below;
+        }
+
+        public bool canSlowdownTime()
+        {
+            return !returningInTime && _slowdownPower > 0.0f;
         }
 
         public bool canReturnInTime()

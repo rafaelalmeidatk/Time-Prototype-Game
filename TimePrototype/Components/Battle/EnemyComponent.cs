@@ -141,8 +141,7 @@ namespace TimePrototype.Components.Battle
                 {
                     po.velocity.X = 0;
                 }
-                po.velocity.X = moveSpeed * velocity * Time.deltaTime; //(int)MathHelper.Clamp(po.velocity.X + moveSpeed * velocity * Time.deltaTime, -mms, mms);
-                Console.WriteLine(po.velocity.X);
+                po.velocity.X = moveSpeed * velocity * Time.deltaTime;
                 sprite.spriteEffects = velocity < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             }
             else

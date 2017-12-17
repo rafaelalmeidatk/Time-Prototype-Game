@@ -18,7 +18,7 @@ namespace TimePrototype
         {
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            debugRenderEnabled = true;
+            debugRenderEnabled = false;
 
             IsFixedTimeStep = true;
 
@@ -43,7 +43,7 @@ namespace TimePrototype
             base.Update(new GameTime());
             base.Draw(new GameTime());
 
-            Core.getGlobalManager<SystemManager>().setMapId(8);
+            Core.getGlobalManager<SystemManager>().setMapId(10);
 
             // Set first scene
             scene = new SceneMap();

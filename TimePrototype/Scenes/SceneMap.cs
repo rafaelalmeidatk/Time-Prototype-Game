@@ -40,6 +40,7 @@ namespace TimePrototype.Scenes
         //--------------------------------------------------
         // Layer Masks
 
+        public const int MAP_LAYER = 0;
         public const int PLAYER_LAYER = 1;
         public const int ENEMY_LAYER = 2;
         public const int PROJECTILES_LAYER = 3;
@@ -239,7 +240,10 @@ namespace TimePrototype.Scenes
                         break;
                     case "projectile":
                         var rotation = Mathf.deg2Rad * trap.rotation;
-                        entity.addComponent(new ProjectileTrapComponent(trap.properties["activator"], 0, rotation));
+                        var activator = trap.properties.ContainsKey("activator") ? trap.properties["activator"] : "";
+                        var isAuto = trap.properties.ContainsKey("auto") && bool.Parse(trap.properties["auto"]);
+                        var delay = trap.properties.ContainsKey("delay") ? float.Parse(trap.properties["delay"]) : 0.0f;
+                        entity.addComponent(new ProjectileTrapComponent(activator, isAuto, delay, 0, rotation));
                         break;
                 }
                 entity.transform.position = entity.position + trap.position + new Vector2(trap.width, trap.height) / 2;

@@ -34,37 +34,29 @@ namespace TimePrototype.Systems
             var linecast = Physics.linecast(lastPosition, newPosition, 1 << SceneMap.PLAYER_LAYER);
             if (linecast.collider != null)
             {
-                _playerBattler.onHit(linecast.normal * -1);
-                entity.destroy();
+                if (_playerBattler.onHit(linecast.normal * -1))
+                {
+                    entity.destroy();
+                }
                 return;
             }
-
-
+            
             CollisionResult collisionResult;
             var collider = entity.getComponent<Collider>();
 
             // shots vs map
-            /*
             if (collider.collidesWithAnyOfType<MapBoxCollider>(out collisionResult))
             {
-                if (missile != null)
-                {
-                    createMissileExplosionEffect(missile);
-                }
-                else
-                {
-                    createBulletEffect(entity.getComponent<ShotComponent>(), collisionResult.normal);
-                }
+                Console.WriteLine("hey");
                 entity.destroy();
             }
-            */
 
             // shots vs player
             if (_playerBattler.isOnImmunity() || _playerCollider == null) return;
             if (collider.collidesWith(_playerCollider, out collisionResult))
             {
-                _playerBattler.onHit(collisionResult);
-                entity.destroy();
+                if (_playerBattler.onHit(collisionResult))
+                    entity.destroy();
             }
         }
     }

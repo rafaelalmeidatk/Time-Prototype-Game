@@ -4,18 +4,17 @@ using Nez.Sprites;
 
 namespace TimePrototype.Components.Battle.Traps
 {
-    class ProjectileTrapComponent : TrapComponent
+    public class ProjectileTrapComponent : TrapComponent
     {
-
         //--------------------------------------------------
         // Props
 
-        private int _side;
-        private float _rotation;
+        private readonly int _side;
+        private readonly float _rotation;
 
         //----------------------//------------------------//
 
-        public ProjectileTrapComponent(string activatorName, int side, float rotation) : base(activatorName)
+        public ProjectileTrapComponent(string activatorName, bool isAuto, float delay, int side, float rotation) : base(activatorName, isAuto, delay)
         {
             _side = side;
             _rotation = rotation;
@@ -45,6 +44,9 @@ namespace TimePrototype.Components.Battle.Traps
             var shot = entity.scene.createEntity("projectile");
             var direction = sprite.spriteEffects == SpriteEffects.FlipHorizontally ? -1 : 1;
             var position = entity.position;
+
+            position.X += Mathf.cos(_rotation) * 15;
+            position.Y += Mathf.sin(_rotation) * 15;
 
             shot.addComponent(new ProjectileComponent(direction, speed, _rotation));
             shot.transform.position = position;

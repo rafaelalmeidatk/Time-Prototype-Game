@@ -291,3 +291,13 @@
 /processorParam:TextureFormat=Color
 /build:characters/distortion.png
 
+#begin maps/map9.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map9.tmx
+
+#begin maps/map10.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map10.tmx
+
