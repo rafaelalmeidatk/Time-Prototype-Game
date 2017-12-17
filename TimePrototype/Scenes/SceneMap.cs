@@ -83,6 +83,7 @@ namespace TimePrototype.Scenes
         {
             addRenderer(new DefaultRenderer());
             Core.getGlobalManager<InputManager>().IsLocked = false;
+            clearColor = new Color(54, 72, 130);
             setupMap();
             setupPlayer();
             setupPaths();
