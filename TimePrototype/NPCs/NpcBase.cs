@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +37,11 @@ namespace TimePrototype.NPCs
         public string Name { get; set; }
 
         //--------------------------------------------------
+        // Enabled
+
+        public bool Enabled { get; set; }
+
+        //--------------------------------------------------
         // Render Layer
 
         private int _renderLayer;
@@ -63,10 +69,7 @@ namespace TimePrototype.NPCs
         protected Texture2D _texture;
         protected string TextureName
         {
-            set
-            {
-                _texture = entity.scene.content.Load<Texture2D>(value);
-            }
+            set => _texture = entity.scene.content.Load<Texture2D>(value);
         }
 
         //--------------------------------------------------
@@ -86,8 +89,9 @@ namespace TimePrototype.NPCs
 
         //----------------------//------------------------//
 
-        public NpcBase(string name)
+        protected NpcBase(string name)
         {
+            Enabled = true;
             Name = name;
             _commands = new List<NpcCommand>();
             _switches = new Dictionary<string, bool>();
@@ -293,6 +297,11 @@ namespace TimePrototype.NPCs
         protected void mapTransfer(int mapId, int mapX, int mapY)
         {
             _commands.Add(new NpcMapTransferCommand(this, mapId, mapX, mapY));
+        }
+
+        protected void executeAction(Action action)
+        {
+            _commands.Add(new NpcExecuteActionCommand(this, action));
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace TimePrototype.Components.Player
                     fsm.resetStackTo(new JumpingState(true));
                 }
 
-                if (_input.ReturnTimeButton.isPressed)
+                if (entity.canReturnInTime() && _input.ReturnTimeButton.isPressed)
                 {
                     fsm.pushState(new ReturnInTimeState());
                 }
@@ -130,7 +130,7 @@ namespace TimePrototype.Components.Player
         {
             entity.entity.removeComponent<TrailRibbon>();
             _trailRibbon = entity.entity.addComponent(new TrailRibbon {ribbonRadius = 9, startColor = Color.WhiteSmoke, endColor = Color.White});
-            _trailRibbon.ribbonsToDraw = 1;
+            _trailRibbon.ribbonsToDraw = 1.0f;
 
             entity.returningInTime = true;
             entity.fadeTail();
@@ -142,7 +142,7 @@ namespace TimePrototype.Components.Player
             {
                 _casted = true;
 
-                var position = entity.getComponent<TimedSpriteTail>().lastInstancePosition();
+                var position = entity.getReturnInTimePosition();
                 if (position != Vector2.Zero)
                 {
                     _start = entity.entity.position;

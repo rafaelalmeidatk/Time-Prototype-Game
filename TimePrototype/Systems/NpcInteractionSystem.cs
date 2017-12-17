@@ -64,11 +64,14 @@ namespace TimePrototype.Systems
         public override void process(Entity entity)
         {
             var npcComp = entity.getComponent<NpcBase>();
+            if (!npcComp.Enabled) return;
 
             if (npcComp.RunOnTouch)
             {
                 CollisionResult collisionResult;
-                if (entity.getComponent<Collider>().collidesWith(_player.getComponent<InteractionCollider>(), out collisionResult))
+                var collider = entity.getComponent<Collider>();
+                if (collider == null) return;
+                if (collider.collidesWith(_player.getComponent<InteractionCollider>(), out collisionResult))
                 {
                     executeActionList(entity.getComponent<NpcBase>(), true);
                 }
@@ -85,8 +88,6 @@ namespace TimePrototype.Systems
                     }
                 }
             }
-
-            
         }
 
         private void executeActionList(NpcBase npc, bool turnToPlayer)

@@ -35,6 +35,11 @@ namespace TimePrototype.Managers
         private Vector2? _spawnPosition;
         public Vector2? SpawnPosition => _spawnPosition;
 
+        //--------------------------------------------------
+        // Distortion pos
+
+        public Vector2 distortionPosition;
+
         //----------------------//------------------------//
 
         public SystemManager()

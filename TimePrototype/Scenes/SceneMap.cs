@@ -16,6 +16,7 @@ using TimePrototype.Components.Player;
 using TimePrototype.Components.Windows;
 using TimePrototype.Managers;
 using TimePrototype.NPCs;
+using TimePrototype.Scenes.SceneMapExtensions;
 using TimePrototype.Structs;
 using TimePrototype.Systems;
 
@@ -58,14 +59,14 @@ namespace TimePrototype.Scenes
         private TiledMap _tiledMap;
 
         //--------------------------------------------------
+        // Map Extensions
+
+        private List<ISceneMapExtensionable> _mapExtensions;
+
+        //--------------------------------------------------
         // Paths
 
         private MapPath[] _paths;
-
-        //--------------------------------------------------
-        // Traps activators
-
-        private MapActivator[] _activators;
 
         //--------------------------------------------------
         // HUD
@@ -90,6 +91,7 @@ namespace TimePrototype.Scenes
             setupBushes();
             setupDoors();
             setupKeys();
+            setupMapExtensions();
             setupTransfers();
         }
 
@@ -107,7 +109,7 @@ namespace TimePrototype.Scenes
             _tiledMap = content.Load<TiledMap>($"maps/map{mapId}");
             sysManager.setTiledMapComponent(_tiledMap);
 
-            var tiledEntity = createEntity("tiled-map");
+            var tiledEntity = createEntity("tiledMap");
             var collisionLayer = _tiledMap.properties["collisionLayer"];
             var defaultLayers = _tiledMap.properties["defaultLayers"].Split(',').Select(s => s.Trim()).ToArray();
 
@@ -124,14 +126,14 @@ namespace TimePrototype.Scenes
 
         private void setupPlayer()
         {
-            var sysManager = Core.getGlobalManager<SystemManager>();
+            var systemManager = Core.getGlobalManager<SystemManager>();
 
             var collisionLayer = _tiledMap.properties["collisionLayer"];
             Vector2? playerSpawn;
 
-            if (sysManager.SpawnPosition.HasValue)
+            if (systemManager.SpawnPosition.HasValue)
             {
-                playerSpawn = sysManager.SpawnPosition;
+                playerSpawn = systemManager.SpawnPosition;
             }
             else
             {
@@ -144,15 +146,20 @@ namespace TimePrototype.Scenes
             var collider = player.addComponent(new BoxCollider(-7f, -9f, 15f, 25f));
             Flags.setFlagExclusive(ref collider.physicsLayer, PLAYER_LAYER);
 
+            player.addComponent(new InteractionCollider(-30f, -6, 60, 22));
+
             player.addComponent(new BattleComponent());
             player.addComponent(new PlatformerObject(_tiledMap));
             player.addComponent<TextWindowComponent>();
 
-            var tail = player.addComponent(new TimedSpriteTail() { fadeDuration = 1f});
+            var tail = player.addComponent(new TimedSpriteTail { fadeDuration = 1f});
             tail.renderLayer = MISC_RENDER_LAYER;
+            tail.setEnabled(systemManager.MapId > 8);
 
             var playerComponent = player.addComponent<PlayerComponent>();
             playerComponent.sprite.renderLayer = PLAYER_RENDER_LAYER;
+
+            systemManager.setPlayer(player);
 
             // Timer
             createEntity("timer")
@@ -287,17 +294,17 @@ namespace TimePrototype.Scenes
             {
                 names[npc.name] = names.ContainsKey(npc.name) ? ++names[npc.name] : 0;
 
-                var npcEntity = createEntity(string.Format("{0}:{1}", npc.name, names[npc.name]));
+                var npcEntity = createEntity($"{npc.name}:{names[npc.name]}");
                 var npcComponent = (NpcBase)Activator.CreateInstance(Type.GetType("TimePrototype.NPCs." + npc.type), npc.name);
                 npcComponent.setRenderLayer(MISC_RENDER_LAYER);
                 npcComponent.ObjectRect = new Rectangle(0, 0, npc.width, npc.height);
                 npcEntity.addComponent(npcComponent);
                 npcEntity.addComponent<TextWindowComponent>();
                 npcEntity.addComponent(new TiledMapMover(_tiledMap.getLayer<TiledTileLayer>(collisionLayer)));
+                npcEntity.position = npc.position;
 
                 if (!npcComponent.Invisible)
                 {
-                    npcEntity.position = npc.position + new Vector2(npc.width, npc.height) / 2;
                     npcEntity.addComponent(new PlatformerObject(_tiledMap));
                 }
 
@@ -358,6 +365,23 @@ namespace TimePrototype.Scenes
             entity.setPosition(keyObj[0].position + new Vector2(keyObj[0].width, keyObj[0].height) / 2);
         }
 
+        private void setupMapExtensions()
+        {
+            _mapExtensions = new List<ISceneMapExtensionable>();
+
+            if (!_tiledMap.properties.ContainsKey("mapExtensions")) return;
+
+            var extensions = _tiledMap.properties["mapExtensions"].Split(',').Select(s => s.Trim()).ToArray();
+
+            foreach (var extension in extensions)
+            {
+                var extensionInstance = (ISceneMapExtensionable)Activator.CreateInstance(Type.GetType("TimePrototype.Scenes.SceneMapExtensions." + extension));
+                extensionInstance.Scene = this;
+                extensionInstance.initialize();
+                _mapExtensions.Add(extensionInstance);
+            }
+        }
+
         private void setupHud()
         {
             _hudEntities = new Entity[2];
@@ -406,6 +430,22 @@ namespace TimePrototype.Scenes
             Core.getGlobalManager<SystemManager>().setMapId(mapId);
             Core.getGlobalManager<SystemManager>().setSpawnPosition(spawnPosition);
             Core.startSceneTransition(new FadeTransition(() => new SceneMap()));
+        }
+
+        public void sendMessageToExtensions(string message)
+        {
+            foreach (var extension in _mapExtensions)
+            {
+                extension.receiveSceneMessage(message);
+            }
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            // Update extensions
+            _mapExtensions.ForEach(extension => extension.update());
         }
     }
 }

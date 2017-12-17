@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Nez.Sprites;
+﻿using Microsoft.Xna.Framework;
 using Nez;
-using Nez.IEnumerableExtensions;
-using Nez.UI;
+using Nez.Sprites;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TimePrototype.Components.GraphicComponents
 {

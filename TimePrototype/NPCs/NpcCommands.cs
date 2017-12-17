@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Nez;
 using TimePrototype.Components.Player;
 using TimePrototype.Components.Windows;
@@ -326,6 +327,26 @@ namespace TimePrototype.NPCs
         {
             var mapScene = (SceneMap)_npc.entity.scene;
             mapScene.reserveTransfer(_mapId, _mapX, _mapY);
+        }
+
+        public override bool update()
+        {
+            return true;
+        }
+    }
+
+    public class NpcExecuteActionCommand : NpcCommand
+    {
+        private Action _action;
+
+        public NpcExecuteActionCommand(NpcBase npc, Action action) : base(npc)
+        {
+            _action = action;
+        }
+
+        public override void start()
+        {
+            _action.Invoke();
         }
 
         public override bool update()

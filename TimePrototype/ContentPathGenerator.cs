@@ -7,6 +7,7 @@ namespace Nez
     {
 		public static class Characters
 		{
+			public const string distortion = @"characters\distortion";
 			public const string placeholder = @"characters\placeholder";
 			public const string player = @"characters\player";
 		}
@@ -28,6 +29,8 @@ namespace Nez
 			public const string map4 = @"maps\map4";
 			public const string map5 = @"maps\map5";
 			public const string map6 = @"maps\map6";
+			public const string map7 = @"maps\map7";
+			public const string map8 = @"maps\map8";
 			public const string tileset = @"maps\tileset";
 		}
 

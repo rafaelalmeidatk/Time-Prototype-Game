@@ -116,6 +116,12 @@ namespace TimePrototype.Components.Player
         private float _slowdownCooldown;
 
         //--------------------------------------------------
+        // On first distortion
+
+        public bool onFirstDistortion;
+        public bool returnInTimeOnFirstDistortion;
+
+        //--------------------------------------------------
         // Timer
 
         private TimerComponent _timer;
@@ -379,6 +385,24 @@ namespace TimePrototype.Components.Player
         public bool isOnGround()
         {
             return ForcedGround || _platformerObject.collisionState.below;
+        }
+
+        public bool canReturnInTime()
+        {
+            return onFirstDistortion || returnInTimeOnFirstDistortion || Core.getGlobalManager<SystemManager>().MapId > 8;
+        }
+
+        public Vector2 getReturnInTimePosition()
+        {
+            if (onFirstDistortion)
+            {
+                onFirstDistortion = false;
+                returnInTimeOnFirstDistortion = true;
+                _spriteTail.setEnabled(true);
+                (entity.scene as SceneMap)?.sendMessageToExtensions("removeDistortion");
+                return Core.getGlobalManager<SystemManager>().distortionPosition;
+            }
+            return entity.getComponent<TimedSpriteTail>().lastInstancePosition();
         }
 
         public override void debugRender(Graphics graphics)
