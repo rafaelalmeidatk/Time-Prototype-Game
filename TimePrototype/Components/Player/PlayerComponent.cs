@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
+using Nez.Sprites;
 using Nez.Tiled;
 using TimePrototype.Components.Battle;
 using TimePrototype.Components.GraphicComponents;
@@ -126,6 +127,11 @@ namespace TimePrototype.Components.Player
 
         private TimerComponent _timer;
 
+        //--------------------------------------------------
+        // Distortion cursor
+
+        private Sprite _distortionCursorSprite;
+
         //----------------------//------------------------//
 
         public override void initialize()
@@ -176,7 +182,7 @@ namespace TimePrototype.Components.Player
             _fsm = new FiniteStateMachine<PlayerState, PlayerComponent>(this, new StandState());
 
             // init slowdown
-            _slowdownPower = 2;
+            _slowdownPower = SLOWDOWN_DURATION;
             _slowdownCooldown = 0.0f;
         }
 
@@ -193,6 +199,7 @@ namespace TimePrototype.Components.Player
             _battleComponent.destroyEntityAction = destroyEntity;
 
             _timer = entity.scene.findEntity("timer").getComponent<TimerComponent>();
+            _distortionCursorSprite = entity.scene.findEntity("distortionCursor").getComponent<Sprite>();
         }
 
         public void destroyEntity()
@@ -279,6 +286,9 @@ namespace TimePrototype.Components.Player
             _fsm.update();
 
             _spriteTail.canSpawnMoreInstance = !returningInTime && sprite.enabled;
+            var distortionPosition = getReturnInTimePosition();
+            _distortionCursorSprite.entity.setPosition(distortionPosition - new Vector2(0, 17));
+            _distortionCursorSprite.setEnabled(distortionPosition != Vector2.Zero);
 
             // apply knockback before movement
             if (applyKnockback())

@@ -24,6 +24,9 @@ namespace Nez
 		{
 			public const string map0 = @"maps\map0";
 			public const string map1 = @"maps\map1";
+			public const string map10 = @"maps\map10";
+			public const string map11 = @"maps\map11";
+			public const string map12 = @"maps\map12";
 			public const string map2 = @"maps\map2";
 			public const string map3 = @"maps\map3";
 			public const string map4 = @"maps\map4";
@@ -31,6 +34,7 @@ namespace Nez
 			public const string map6 = @"maps\map6";
 			public const string map7 = @"maps\map7";
 			public const string map8 = @"maps\map8";
+			public const string map9 = @"maps\map9";
 			public const string tileset = @"maps\tileset";
 		}
 
@@ -40,6 +44,7 @@ namespace Nez
 			public const string arrow = @"misc\arrow";
 			public const string bush = @"misc\bush";
 			public const string bush_with_player = @"misc\bush_with_player";
+			public const string distortion_cursor = @"misc\distortion_cursor";
 			public const string door = @"misc\door";
 			public const string key = @"misc\key";
 			public const string projectile_trap = @"misc\projectile_trap";

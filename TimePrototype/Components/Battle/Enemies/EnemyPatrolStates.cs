@@ -46,12 +46,6 @@ namespace TimePrototype.Components.Battle.Enemies
                 switchSide();
             }
 
-            if (entity.attackCooldown > 0.0)
-            {
-                entity.attackCooldown -= Time.deltaTime;
-                return;
-            }
-
             if (entity.canSeeThePlayer() && !entity.playerIsOnBush())
             {
                 entity.attackCooldown = 1.0f;
@@ -79,8 +73,30 @@ namespace TimePrototype.Components.Battle.Enemies
         {
             if (entity.sprite.Looped)
             {
-                fsm.resetStackTo(new EnemyPatrolWalkingState());
+                fsm.resetStackTo(new EnemyPatrolReloading());
             }
+        }
+    }
+
+    public class EnemyPatrolReloading : EnemyPatrolState
+    {
+        public override void begin()
+        {
+            // reload anim
+            base.begin();
+        }
+
+        public override void update()
+        {
+            if (entity.attackCooldown > 0.0)
+            {
+                entity.attackCooldown -= Time.deltaTime;
+                if (entity.attackCooldown <= 0)
+                {
+                    fsm.resetStackTo(new EnemyPatrolWalkingState());
+                }
+            }
+            entity.turnToPlayer();
         }
     }
 }

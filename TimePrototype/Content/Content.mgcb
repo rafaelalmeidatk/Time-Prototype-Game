@@ -301,3 +301,25 @@
 /processor:TiledMapProcessor
 /build:maps/map10.tmx
 
+#begin maps/map11.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map11.tmx
+
+#begin maps/map12.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/map12.tmx
+
+#begin misc/distortion_cursor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:misc/distortion_cursor.png
+

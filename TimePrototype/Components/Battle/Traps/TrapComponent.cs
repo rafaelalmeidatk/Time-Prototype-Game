@@ -27,17 +27,19 @@ namespace TimePrototype.Components.Battle.Traps
         // Cooldown
 
         public float cooldown;
+        public float initialDelay;
 
         //----------------------//------------------------//
 
-        protected TrapComponent(string activatorName, bool isAuto, float delay = 0.0f)
+        protected TrapComponent(string activatorName, bool isAuto, float delay, float initialDelay)
         {
             this.activatorName = activatorName;
             this.isAuto = isAuto;
             this.delay = delay;
+            this.initialDelay = initialDelay;
             if (isAuto)
             {
-                cooldown = delay;
+                cooldown = initialDelay == 0.0f ? delay : initialDelay;
             }
         }
 

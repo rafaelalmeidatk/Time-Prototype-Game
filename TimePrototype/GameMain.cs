@@ -43,7 +43,7 @@ namespace TimePrototype
             base.Update(new GameTime());
             base.Draw(new GameTime());
 
-            Core.getGlobalManager<SystemManager>().setMapId(10);
+            Core.getGlobalManager<SystemManager>().setMapId(12);
 
             // Set first scene
             scene = new SceneMap();

@@ -153,7 +153,7 @@ namespace TimePrototype.Scenes
             player.addComponent(new PlatformerObject(_tiledMap));
             player.addComponent<TextWindowComponent>();
 
-            var tail = player.addComponent(new TimedSpriteTail { fadeDuration = 1f});
+            var tail = player.addComponent(new TimedSpriteTail { fadeDuration = 0.8f});
             tail.renderLayer = MISC_RENDER_LAYER;
             tail.setEnabled(systemManager.MapId > 8);
 
@@ -166,6 +166,10 @@ namespace TimePrototype.Scenes
             createEntity("timer")
                 .addComponent(new TimerComponent(player))
                 .setVisible(false);
+
+            // Distortion cursor
+            createEntity("distortionCursor")
+                .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.distortion_cursor)));
         }
 
         private void setupPaths()
@@ -236,17 +240,25 @@ namespace TimePrototype.Scenes
                             .addComponent(new TrapActivatorComponent(trap.name))
                             .addComponent(new BoxCollider(-8, -4, 16, 5))
                             .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.activator)))
-                            .transform.position = 7 * Vector2.UnitY;
+                            .transform.position = -1 * Vector2.UnitY;
                         break;
                     case "projectile":
                         var rotation = Mathf.deg2Rad * trap.rotation;
                         var activator = trap.properties.ContainsKey("activator") ? trap.properties["activator"] : "";
                         var isAuto = trap.properties.ContainsKey("auto") && bool.Parse(trap.properties["auto"]);
                         var delay = trap.properties.ContainsKey("delay") ? float.Parse(trap.properties["delay"]) : 0.0f;
-                        entity.addComponent(new ProjectileTrapComponent(activator, isAuto, delay, 0, rotation));
+                        var initialDelay = trap.properties.ContainsKey("initialDelay")
+                            ? float.Parse(trap.properties["initialDelay"])
+                            : 0.0f;
+                        entity.addComponent(new ProjectileTrapComponent(activator, isAuto, delay, initialDelay, 0, rotation));
                         break;
                 }
-                entity.transform.position = entity.position + trap.position + new Vector2(trap.width, trap.height) / 2;
+                var rad = Mathf.deg2Rad * trap.rotation;
+                var center = new Vector2(trap.width, trap.height) / 2;
+                var rot = new Vector2(Mathf.cos(rad), Mathf.sin(rad));
+                var rotCenter = new Vector2(center.X * rot.X - center.Y * rot.Y,
+                center.X * rot.X + center.Y * rot.Y);
+                entity.transform.position = entity.position + trap.position + rotCenter;
             }
         }
 

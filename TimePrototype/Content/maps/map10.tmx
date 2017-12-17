@@ -51,63 +51,63 @@
  <objectgroup name="enemies"/>
  <objectgroup name="traps">
   <object id="65" name="ac1" type="activator" x="288" y="240" width="32" height="16"/>
-  <object id="69" name="Trap" type="projectile" x="288" y="138" width="16" height="16" rotation="-270">
+  <object id="69" name="Trap" type="projectile" x="304" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="81" name="Trap" type="projectile" x="224" y="138" width="16" height="16" rotation="-270">
+  <object id="81" name="Trap" type="projectile" x="240" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="82" name="Trap" type="projectile" x="256" y="138" width="16" height="16" rotation="-270">
+  <object id="82" name="Trap" type="projectile" x="272" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="83" name="Trap" type="projectile" x="192" y="138" width="16" height="16" rotation="-270">
+  <object id="83" name="Trap" type="projectile" x="208" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="84" name="Trap" type="projectile" x="320" y="138" width="16" height="16" rotation="-270">
+  <object id="84" name="Trap" type="projectile" x="336" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="86" name="Trap" type="projectile" x="304" y="138" width="16" height="16" rotation="-270">
+  <object id="86" name="Trap" type="projectile" x="320" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="87" name="Trap" type="projectile" x="272" y="138" width="16" height="16" rotation="-270">
+  <object id="87" name="Trap" type="projectile" x="288" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="88" name="Trap" type="projectile" x="240" y="138" width="16" height="16" rotation="-270">
+  <object id="88" name="Trap" type="projectile" x="256" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="89" name="Trap" type="projectile" x="208" y="138" width="16" height="16" rotation="-270">
+  <object id="89" name="Trap" type="projectile" x="224" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="90" name="Trap" type="projectile" x="176" y="138" width="16" height="16" rotation="-270">
+  <object id="90" name="Trap" type="projectile" x="192" y="138" width="16" height="16" rotation="-270">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="92" name="Trap" type="projectile" x="407" y="80" width="16" height="16" rotation="180">
+  <object id="92" name="Trap" type="projectile" x="422" y="96" width="16" height="16" rotation="180">
    <properties>
     <property name="auto" type="bool" value="true"/>
     <property name="delay" type="float" value="1"/>
    </properties>
   </object>
-  <object id="93" name="Trap" type="projectile" x="439" y="64" width="16" height="16" rotation="180">
+  <object id="93" name="Trap" type="projectile" x="454" y="80" width="16" height="16" rotation="180">
    <properties>
     <property name="auto" type="bool" value="true"/>
     <property name="delay" type="float" value="1"/>

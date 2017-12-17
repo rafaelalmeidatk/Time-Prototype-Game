@@ -55,14 +55,14 @@
   </object>
  </objectgroup>
  <objectgroup name="traps">
-  <object id="64" name="Trap" type="projectile" x="119" y="208" width="16" height="16" rotation="180">
+  <object id="64" name="Trap" type="projectile" x="135" y="208" width="16" height="16" rotation="180">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
   <object id="65" name="ac1" type="activator" x="88" y="207.5" width="32" height="16"/>
   <object id="66" name="Key" type="key" x="88" y="209.5" width="32" height="14"/>
-  <object id="67" name="Trap" type="projectile" x="119" y="176" width="16" height="16" rotation="180">
+  <object id="67" name="Trap" type="projectile" x="135" y="176" width="16" height="16" rotation="180">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>

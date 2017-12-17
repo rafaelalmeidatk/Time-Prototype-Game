@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Nez;
+﻿using Nez;
 using TimePrototype.Components.Player;
 using TimePrototype.Managers;
 using TimePrototype.Scenes;
@@ -17,8 +16,8 @@ namespace TimePrototype.NPCs
         protected override void createActionList()
         {
             executeAction(() => { Enabled = false; });
-            playerMessage("I feel...");
-            playerMessage("I have been here already.");
+            playerMessage("I feel like...");
+            playerMessage("I've been here already.");
             executeAction(() =>
             {
                 var player = Core.getGlobalManager<SystemManager>().playerEntity;

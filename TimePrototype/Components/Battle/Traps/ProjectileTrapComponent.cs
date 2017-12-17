@@ -14,7 +14,8 @@ namespace TimePrototype.Components.Battle.Traps
 
         //----------------------//------------------------//
 
-        public ProjectileTrapComponent(string activatorName, bool isAuto, float delay, int side, float rotation) : base(activatorName, isAuto, delay)
+        public ProjectileTrapComponent(string activatorName, bool isAuto, float delay, float initialDelay,
+            int side, float rotation) : base(activatorName, isAuto, delay, initialDelay)
         {
             _side = side;
             _rotation = rotation;
@@ -45,8 +46,8 @@ namespace TimePrototype.Components.Battle.Traps
             var direction = sprite.spriteEffects == SpriteEffects.FlipHorizontally ? -1 : 1;
             var position = entity.position;
 
-            position.X += Mathf.cos(_rotation) * 15;
-            position.Y += Mathf.sin(_rotation) * 15;
+            position.X += Mathf.cos(_rotation) * 5;
+            position.Y += Mathf.sin(_rotation) * 5;
 
             shot.addComponent(new ProjectileComponent(direction, speed, _rotation));
             shot.transform.position = position;

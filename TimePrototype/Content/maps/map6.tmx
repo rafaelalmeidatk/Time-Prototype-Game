@@ -52,12 +52,12 @@
   </object>
  </objectgroup>
  <objectgroup name="traps">
-  <object id="54" name="Trap" type="projectile" x="326" y="49" width="16" height="16" rotation="180">
+  <object id="54" name="Trap" type="projectile" x="342" y="56" width="16" height="16" rotation="180">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
   </object>
-  <object id="55" name="Trap" type="projectile" x="326" y="22" width="16" height="16" rotation="180">
+  <object id="55" name="Trap" type="projectile" x="342" y="32" width="16" height="16" rotation="180">
    <properties>
     <property name="activator" value="ac1"/>
    </properties>
