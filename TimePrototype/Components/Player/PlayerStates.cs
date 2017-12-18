@@ -94,6 +94,7 @@ namespace TimePrototype.Components.Player
 
         public override void begin()
         {
+            entity.SetAnimation(PlayerComponent.Animations.Jumping);
             if (_needJump)
             {
                 AudioManager.jump.Play(1f);

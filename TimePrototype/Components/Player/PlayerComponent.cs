@@ -24,6 +24,7 @@ namespace TimePrototype.Components.Player
         {
             Stand,
             Walking,
+            Jumping,
             Shot,
             Dying
         }
@@ -149,6 +150,7 @@ namespace TimePrototype.Components.Player
             {
                 {Animations.Stand, "stand"},
                 {Animations.Walking, "walking"},
+                {Animations.Jumping, "jumping"},
                 {Animations.Shot, "shot"},
                 {Animations.Dying, "dying"},
             };
@@ -156,10 +158,13 @@ namespace TimePrototype.Components.Player
             var am = _animationMap;
 
             sprite = entity.addComponent(new AnimatedSprite(texture, am[Animations.Stand]));
-            sprite.CreateAnimation(am[Animations.Stand], 0.1f);
+            sprite.CreateAnimation(am[Animations.Stand], 0.2f);
             sprite.AddFrames(am[Animations.Stand], new List<Rectangle>()
             {
                 new Rectangle(0, 0, 32, 32),
+                new Rectangle(64, 32, 32, 32),
+                new Rectangle(96, 32, 32, 32),
+                new Rectangle(64, 32, 32, 32),
             });
 
             sprite.CreateAnimation(am[Animations.Walking], 0.1f);
@@ -169,6 +174,12 @@ namespace TimePrototype.Components.Player
                 new Rectangle(64, 0, 32, 32),
                 new Rectangle(96, 0, 32, 32),
                 new Rectangle(128, 0, 32, 32),
+            });
+
+            sprite.CreateAnimation(am[Animations.Jumping], 0.1f);
+            sprite.AddFrames(am[Animations.Jumping], new List<Rectangle>()
+            {
+                new Rectangle(0, 32, 32, 32),
             });
 
             sprite.CreateAnimation(am[Animations.Shot], 0.1f);
@@ -181,8 +192,8 @@ namespace TimePrototype.Components.Player
             sprite.CreateAnimation(am[Animations.Dying], 0.1f);
             sprite.AddFrames(am[Animations.Dying], new List<Rectangle>()
             {
-                new Rectangle(0, 0, 32, 32),
-                new Rectangle(0, 0, 32, 32),
+                new Rectangle(32, 32, 32, 32),
+                new Rectangle(32, 32, 32, 32),
             });
 
             // init fsm

@@ -78,10 +78,9 @@ namespace TimePrototype.Scenes
         public SoundEffectInstance _slowmotionSeInstance;
 
         //--------------------------------------------------
-        // Heat and Vignette post processors
+        // Heat Distortion Postprocessor
 
         private HeatDistortionPostProcessor _heatDistortionPostProcessor;
-        private VignettePostProcessor _vignettePostProcessor;
 
         //----------------------//------------------------//
 
@@ -428,8 +427,6 @@ namespace TimePrototype.Scenes
 
             _heatDistortionPostProcessor = addPostProcessor(new HeatDistortionPostProcessor(5));
             _heatDistortionPostProcessor.enabled = false;
-            _vignettePostProcessor = addPostProcessor(new VignettePostProcessor(1));
-            _vignettePostProcessor.enabled = false;
         }
 
         private void setupTransfers()
@@ -474,7 +471,7 @@ namespace TimePrototype.Scenes
         {
             base.update();
 
-            // Update post processors
+            // Update player slowmotion
             if (_playerComponent.isSlowingdownTheTime != _lastSlowmotionState)
             {
                 _lastSlowmotionState = _playerComponent.isSlowingdownTheTime;
@@ -491,8 +488,9 @@ namespace TimePrototype.Scenes
                     MediaPlayer.Volume = 1.0f;
                 }
             }
+
+            // Update post processors
             _heatDistortionPostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
-            //_vignettePostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
 
             // Update extensions
             _mapExtensions.ForEach(extension => extension.update());
