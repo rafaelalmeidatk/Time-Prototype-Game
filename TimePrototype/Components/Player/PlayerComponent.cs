@@ -115,6 +115,7 @@ namespace TimePrototype.Components.Player
         private const float SLOWDOWN_COOLDOWN = 2.0f;
         private float _slowdownPower;
         private float _slowdownCooldown;
+        public bool isSlowingdownTheTime { get; private set; }
 
         //--------------------------------------------------
         // On first distortion
@@ -205,8 +206,7 @@ namespace TimePrototype.Components.Player
         public void destroyEntity()
         {
             entity.setEnabled(false);
-            //Core.startSceneTransition(new SquaresTransition(() => new SceneMap()));
-            Core.startSceneTransition(new FadeTransition(() => new SceneMap()));
+            Core.startSceneTransition(new WindTransition(() => new SceneMap()));
         }
 
         public void onHit(Vector2 knockback)
@@ -246,6 +246,7 @@ namespace TimePrototype.Components.Player
             // Slowdown
             if (Core.getGlobalManager<InputManager>().TimeSlowdownButton.isDown && canSlowdownTime())
             {
+                isSlowingdownTheTime = true;
                 Time.timeScale = 0.4f;
                 _slowdownPower -= Time.unscaledDeltaTime;
                 if (_slowdownPower <= 0.0f)
@@ -255,6 +256,7 @@ namespace TimePrototype.Components.Player
             }
             else
             {
+                isSlowingdownTheTime = false;
                 Time.timeScale = 1.0f;
                 if (_slowdownCooldown <= 0.0f)
                 {

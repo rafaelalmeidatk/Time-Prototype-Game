@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
+using Nez.Textures;
 using Nez.Tiled;
 using TimePrototype.Components;
 using TimePrototype.Components.Battle;
@@ -70,19 +71,21 @@ namespace TimePrototype.Scenes
         private MapPath[] _paths;
 
         //--------------------------------------------------
-        // HUD
+        // Player
 
-        private Entity[] _hudEntities;
-        private Vector2[] _hudPositions;
+        private PlayerComponent _playerComponent;
 
-        private Sprite _playerHudFillSprite;
+        //--------------------------------------------------
+        // Heat and Vignette post processors
+
+        private HeatDistortionPostProcessor _heatDistortionPostProcessor;
+        private VignettePostProcessor _vignettePostProcessor;
 
         //----------------------//------------------------//
 
         public override void initialize()
         {
             addRenderer(new DefaultRenderer());
-            Core.getGlobalManager<InputManager>().IsLocked = false;
             clearColor = new Color(54, 72, 130);
             setupMap();
             setupPlayer();
@@ -94,14 +97,15 @@ namespace TimePrototype.Scenes
             setupDoors();
             setupKeys();
             setupMapExtensions();
+            setupPostProcessors();
             setupTransfers();
         }
 
         public override void onStart()
         {
             setupEntityProcessors();
-
             getEntityProcessor<NpcInteractionSystem>().mapStart();
+            Core.getGlobalManager<InputManager>().IsLocked = false;
         }
 
         private void setupMap()
@@ -147,22 +151,25 @@ namespace TimePrototype.Scenes
             player.addComponent(new TiledMapMover(_tiledMap.getLayer<TiledTileLayer>(collisionLayer)));
             var collider = player.addComponent(new BoxCollider(-7f, -9f, 15f, 25f));
             Flags.setFlagExclusive(ref collider.physicsLayer, PLAYER_LAYER);
+            
+            // Timer
 
             player.addComponent(new InteractionCollider(-20f, -6, 40, 22));
-
             player.addComponent(new BattleComponent());
             player.addComponent(new PlatformerObject(_tiledMap));
             player.addComponent<TextWindowComponent>();
+
+            // Distortion Sprites (Tail)
 
             var tail = player.addComponent(new TimedSpriteTail { fadeDuration = 0.8f});
             tail.renderLayer = MISC_RENDER_LAYER;
             tail.setEnabled(systemManager.MapId > 8);
 
+            // Player Component
+
             var playerComponent = player.addComponent<PlayerComponent>();
             playerComponent.sprite.renderLayer = PLAYER_RENDER_LAYER;
-
-            systemManager.setPlayer(player);
-
+            
             // Timer
             createEntity("timer")
                 .addComponent(new TimerComponent(player))
@@ -172,6 +179,10 @@ namespace TimePrototype.Scenes
             createEntity("distortionCursor")
                 .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.distortion_cursor)))
                 .renderLayer = MISC_RENDER_LAYER;
+
+            // Set player
+            _playerComponent = playerComponent;
+            systemManager.setPlayer(player);
         }
 
         private void setupPaths()
@@ -259,7 +270,7 @@ namespace TimePrototype.Scenes
                 var center = new Vector2(trap.width, trap.height) / 2;
                 var rot = new Vector2(Mathf.cos(rad), Mathf.sin(rad));
                 var rotCenter = new Vector2(center.X * rot.X - center.Y * rot.Y,
-                center.X * rot.X + center.Y * rot.Y);
+                    center.X * rot.X + center.Y * rot.Y);
                 entity.transform.position = entity.position + trap.position + rotCenter;
             }
         }
@@ -400,24 +411,19 @@ namespace TimePrototype.Scenes
             }
         }
 
-        private void setupHud()
+        private void setupPostProcessors()
         {
-            _hudEntities = new Entity[2];
-            _hudPositions = new Vector2[4];
-            /*
-            _hudEntities[0] = createEntity("playerHudBack");
-            _hudEntities[0].addComponent(new Sprite(content.Load<Texture2D>(Content.Hud.player_hud)) { renderLayer = HUD_BACK_RENDER_LAYER })
-                .setOriginNormalized(Vector2.Zero)
-                .transform.localPosition = new Vector2(3, 5);
-            _hudPositions[0] = new Vector2(6, 17);
+            var bloom = addPostProcessor(new BloomPostProcessor(2));
+            bloom.setBloomSettings(new BloomSettings(0.5f, 0.4f, 0.6f, 1, 1, 1));
 
-            _hudEntities[1] = createEntity("playerHudFill");
-            _hudEntities[1].addComponent(new Sprite(content.Load<Texture2D>(Content.Hud.player_hp)) { renderLayer = HUD_FILL_RENDER_LAYER })
-                .setOriginNormalized(Vector2.Zero)
-                .transform.localPosition = new Vector2(3, 5);
-            _hudPositions[1] = new Vector2(6, 17);
-            */
-            _playerHudFillSprite = findEntity("playerHudFill").getComponent<Sprite>();
+            var scanlines = addPostProcessor(new ScanlinesPostProcessor(1));
+            scanlines.effect.attenuation = 0.04f;
+            scanlines.effect.linesFactor = 1500f;
+
+            _heatDistortionPostProcessor = addPostProcessor(new HeatDistortionPostProcessor(5));
+            _heatDistortionPostProcessor.enabled = false;
+            _vignettePostProcessor = addPostProcessor(new VignettePostProcessor(1));
+            _vignettePostProcessor.enabled = false;
         }
 
         private void setupTransfers()
@@ -461,6 +467,10 @@ namespace TimePrototype.Scenes
         public override void update()
         {
             base.update();
+
+            // Update post processors
+            _heatDistortionPostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
+            //_vignettePostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
 
             // Update extensions
             _mapExtensions.ForEach(extension => extension.update());
