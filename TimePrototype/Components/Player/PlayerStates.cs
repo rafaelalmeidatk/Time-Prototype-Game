@@ -97,7 +97,7 @@ namespace TimePrototype.Components.Player
             entity.SetAnimation(PlayerComponent.Animations.Jumping);
             if (_needJump)
             {
-                AudioManager.jump.Play(1f);
+                AudioManager.jump.Play(0.8f);
                 _needJump = false;
                 entity.Jump();
             }
@@ -198,6 +198,7 @@ namespace TimePrototype.Components.Player
     public class OnBushState : PlayerState
     {
         private Sprite _bushSprite;
+        private bool _goBack;
 
         public override void begin()
         {
@@ -221,10 +222,20 @@ namespace TimePrototype.Components.Player
                 // Position the player on the same pos of the bush
                 entity.entity.setPosition(bush.entity.position);
             }
+            else
+            {
+                // Something went wrong, go back!
+                _goBack = true;
+            }
         }
 
         public override void update()
         {
+            if (_goBack)
+            {
+                fsm.resetStackTo(new StandState());
+                return;
+            }
             if (_input.BushButton.isPressed || _input.JumpButton.isPressed)
             {
                 fsm.resetStackTo(new StandState());
@@ -235,7 +246,7 @@ namespace TimePrototype.Components.Player
         {
             entity.isInsideBush = false;
 
-            _bushSprite.setSubtexture(new Subtexture(entity.entity.scene.content.Load<Texture2D>(Content.Misc.bush)));
+            _bushSprite?.setSubtexture(new Subtexture(entity.entity.scene.content.Load<Texture2D>(Content.Misc.bush)));
             entity.sprite.setEnabled(true);
             _input.IsLocked = false;
 

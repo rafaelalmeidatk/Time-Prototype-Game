@@ -15,7 +15,7 @@ namespace TimePrototype
         public static BitmapFont bigBitmapFont;
         public static BitmapFont smallBitmapFont;
         
-        public GameMain() : base(width: 854, height: 480, isFullScreen: false, enableEntitySystems: true, windowTitle: "Prototype The Game")
+        public GameMain() : base(width: 854, height: 480, isFullScreen: false, enableEntitySystems: true, windowTitle: "Time Prototype")
         {
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
@@ -36,6 +36,7 @@ namespace TimePrototype
             AudioManager.loadAllSounds();
 
             MediaPlayer.Play(AudioManager.malicious);
+            MediaPlayer.Volume = 0.8f;
             MediaPlayer.IsRepeating = true;
         }
 

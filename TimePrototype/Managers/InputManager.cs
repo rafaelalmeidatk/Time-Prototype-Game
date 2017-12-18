@@ -47,17 +47,18 @@ namespace TimePrototype.Managers
                 .addKeyboardKey(Keys.C)
                 .addKeyboardKey(Keys.Space)
                 .addKeyboardKey(Keys.Enter)
-                .addGamePadButton(0, Buttons.A);
-            
+                .addGamePadButton(0, Buttons.A)
+                .addGamePadButton(0, Buttons.X);
+
             _returnTimeButton = new VirtualButton();
             _returnTimeButton
                 .addKeyboardKey(Keys.X)
-                .addGamePadButton(0, Buttons.X);
+                .addGamePadButton(0, Buttons.B);
 
             _timeSlowdownButton = new VirtualButton();
             _timeSlowdownButton
                 .addKeyboardKey(Keys.Z)
-                .addGamePadButton(0, Buttons.X);
+                .addGamePadButton(0, Buttons.Y);
 
             _bushButton = new VirtualButton();
             _bushButton
@@ -67,7 +68,7 @@ namespace TimePrototype.Managers
             _jumpButton = new VirtualButton();
             _jumpButton
                 .addKeyboardKey(Keys.Space)
-                .addGamePadButton(0, Buttons.A);
+                .addGamePadButton(0, Buttons.A);    
 
             _upButton = new VirtualButton();
             _upButton

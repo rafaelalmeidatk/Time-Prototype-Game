@@ -101,7 +101,7 @@ namespace TimePrototype.Components.Battle.Enemies
 
         protected virtual void createViewRange()
         {
-            areaOfSight = entity.addComponent(new AreaOfSightCollider(-24, -12, 110, 12));
+            areaOfSight = entity.addComponent(new AreaOfSightCollider(0, -12, 86, 12));
         }
 
         public override void onAddedToEntity()

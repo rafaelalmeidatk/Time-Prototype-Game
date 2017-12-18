@@ -307,9 +307,12 @@ namespace TimePrototype.Components.Player
             _fsm.update();
 
             _spriteTail.canSpawnMoreInstance = !returningInTime && sprite.enabled;
-            var distortionPosition = getReturnInTimePosition();
-            _distortionCursorSprite.entity.setPosition(distortionPosition - new Vector2(0, 17));
-            _distortionCursorSprite.setEnabled(distortionPosition != Vector2.Zero);
+            if (canReturnInTime() && !onFirstDistortion)
+            {
+                var distortionPosition = getReturnInTimePosition();
+                _distortionCursorSprite.entity.setPosition(distortionPosition - new Vector2(0, 17));
+                _distortionCursorSprite.setEnabled(distortionPosition != Vector2.Zero);
+            }
 
             // apply knockback before movement
             if (applyKnockback())
