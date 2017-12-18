@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Nez;
+using Nez.Textures;
 using TimePrototype.Components.Colliders;
 using TimePrototype.Components.GraphicComponents;
 
@@ -17,12 +20,17 @@ namespace TimePrototype.Components.Battle.Enemies
         {
         }
 
+        protected override Texture2D loadTexture()
+        {
+            return entity.scene.content.Load<Texture2D>(Content.Characters.enemySniper);
+        }
+
         public override void onAddedToEntity()
         {
             base.onAddedToEntity();
 
             var viewRange = (int) areaOfSight.width;
-            entity.addComponent(new LaserComponent(new Vector2(0, -20), viewRange - 24));
+            entity.addComponent(new LaserComponent(new Vector2(6, -7), viewRange - 24));
         }
 
         protected override void createViewRange()

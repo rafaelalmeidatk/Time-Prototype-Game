@@ -36,7 +36,7 @@ namespace TimePrototype.Components.GraphicComponents
             {
                 var offsetX = 0.0f;
                 if (sprite.spriteEffects == SpriteEffects.FlipHorizontally)
-                    offsetX = -1.0f * (width + X);
+                    offsetX = -1.0f * (width + X * 2);
                 ApplyOffset(offsetX, 0);
             }
         }

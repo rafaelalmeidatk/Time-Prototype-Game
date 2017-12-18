@@ -83,13 +83,9 @@
     <Compile Include="GameMain.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\SystemManager.cs" />
-    <Compile Include="NPCs\First Act\BagOnRaft.cs" />
-    <Compile Include="NPCs\First Act\ElderMouse.cs" />
-    <Compile Include="NPCs\First Act\ElliotMother.cs" />
+    <Compile Include="NPCs\First Act\IntroduceSniper.cs" />
+    <Compile Include="NPCs\First Act\IntroduceSlowmotion.cs" />
     <Compile Include="NPCs\First Act\Map8Barrier.cs" />
-    <Compile Include="NPCs\First Act\RaftStake.cs" />
-    <Compile Include="NPCs\First Act\StartFieldBarrier.cs" />
-    <Compile Include="NPCs\First Act\VillageBarrier.cs" />
     <Compile Include="NPCs\First Act\Woah.cs" />
     <Compile Include="NPCs\NpcBase.cs" />
     <Compile Include="NPCs\NpcCommands.cs" />
@@ -99,6 +95,7 @@
     <Compile Include="Scenes\SceneMap.cs" />
     <Compile Include="Scenes\SceneMapExtensions\FirstDistortionEncounter.cs" />
     <Compile Include="Scenes\SceneMapExtensions\ISceneMapExtensionable.cs" />
+    <Compile Include="Scenes\SceneMapExtensions\SlowmotionAndDoorIntroduction.cs" />
     <Compile Include="Structs\MapPath.cs" />
     <Compile Include="Systems\ActivatorsSystem.cs" />
     <Compile Include="Systems\BattleSystem.cs" />

@@ -8,6 +8,8 @@ namespace Nez
 		public static class Characters
 		{
 			public const string distortion = @"characters\distortion";
+			public const string enemy = @"characters\enemy";
+			public const string enemySniper = @"characters\enemySniper";
 			public const string placeholder = @"characters\placeholder";
 			public const string player = @"characters\player";
 		}

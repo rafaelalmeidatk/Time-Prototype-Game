@@ -56,7 +56,7 @@
 </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="playerSpawn" x="414.5" y="76.5"/>
+  <object id="1" name="playerSpawn" x="256" y="240"/>
  </objectgroup>
  <objectgroup name="transfers">
   <object id="5" name="Transfer" type="onTouch" x="464" y="0" width="4" height="96">

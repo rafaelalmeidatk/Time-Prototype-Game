@@ -36,8 +36,10 @@ namespace TimePrototype.Managers
         public Vector2? SpawnPosition => _spawnPosition;
 
         //--------------------------------------------------
-        // Distortion pos
+        // General variables
 
+        public bool introducedSnipers;
+        public bool introducedSlowmotion;
         public Vector2 distortionPosition;
 
         //----------------------//------------------------//

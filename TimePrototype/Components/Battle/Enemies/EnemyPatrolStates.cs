@@ -82,7 +82,7 @@ namespace TimePrototype.Components.Battle.Enemies
     {
         public override void begin()
         {
-            // reload anim
+            entity.sprite.play("reload");
             base.begin();
         }
 

@@ -205,7 +205,8 @@ namespace TimePrototype.Components.Player
         public void destroyEntity()
         {
             entity.setEnabled(false);
-            Core.startSceneTransition(new SquaresTransition(() => new SceneMap()));
+            //Core.startSceneTransition(new SquaresTransition(() => new SceneMap()));
+            Core.startSceneTransition(new FadeTransition(() => new SceneMap()));
         }
 
         public void onHit(Vector2 knockback)
@@ -282,6 +283,7 @@ namespace TimePrototype.Components.Player
                     _timer.setByPorcentage(_slowdownPower / SLOWDOWN_DURATION, false);
                 }
             }
+
             // Update FSM
             _fsm.update();
 
@@ -374,7 +376,6 @@ namespace TimePrototype.Components.Player
         public Entity createEntityOnMap()
         {
             return entity.scene.createEntity();
-
         }
 
         public void Jump()
@@ -400,12 +401,15 @@ namespace TimePrototype.Components.Player
 
         public bool canSlowdownTime()
         {
-            return !returningInTime && _slowdownPower > 0.0f;
+            var sys = Core.getGlobalManager<SystemManager>();
+            return !_battleComponent.Dying && !returningInTime && _slowdownPower > 0.0f &&
+                   (sys.getSwitch("introducedSlowmotion") || sys.MapId > 5);
         }
 
         public bool canReturnInTime()
         {
-            return onFirstDistortion || returnInTimeOnFirstDistortion || Core.getGlobalManager<SystemManager>().MapId > 8;
+            return !_battleComponent.Dying && onFirstDistortion || returnInTimeOnFirstDistortion ||
+                   Core.getGlobalManager<SystemManager>().MapId > 8;
         }
 
         public Vector2 getReturnInTimePosition()
@@ -419,13 +423,6 @@ namespace TimePrototype.Components.Player
                 return Core.getGlobalManager<SystemManager>().distortionPosition;
             }
             return entity.getComponent<TimedSpriteTail>().lastInstancePosition();
-        }
-
-        public override void debugRender(Graphics graphics)
-        {
-            base.debugRender(graphics);
-
-            graphics.batcher.drawString(Graphics.instance.bitmapFont, _slowdownPower.ToString(), entity.position - 30 * Vector2.UnitY, Color.White);
         }
     }
 }

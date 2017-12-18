@@ -75,10 +75,10 @@
  <objectgroup name="transfers">
   <object id="5" name="Transfer" type="onTouch" x="16" y="240" width="4" height="160">
    <properties>
-    <property name="destinyId" type="int" value="2"/>
+    <property name="destinyId" type="int" value="3"/>
     <property name="destinyX" type="int" value="58"/>
     <property name="destinyY" type="int" value="23"/>
-    <property name="direction" value="right"/>
+    <property name="direction" value="left"/>
    </properties>
   </object>
  </objectgroup>

@@ -148,7 +148,7 @@ namespace TimePrototype.Scenes
             var collider = player.addComponent(new BoxCollider(-7f, -9f, 15f, 25f));
             Flags.setFlagExclusive(ref collider.physicsLayer, PLAYER_LAYER);
 
-            player.addComponent(new InteractionCollider(-30f, -6, 60, 22));
+            player.addComponent(new InteractionCollider(-20f, -6, 40, 22));
 
             player.addComponent(new BattleComponent());
             player.addComponent(new PlatformerObject(_tiledMap));
@@ -170,7 +170,8 @@ namespace TimePrototype.Scenes
 
             // Distortion cursor
             createEntity("distortionCursor")
-                .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.distortion_cursor)));
+                .addComponent(new Sprite(content.Load<Texture2D>(Content.Misc.distortion_cursor)))
+                .renderLayer = MISC_RENDER_LAYER;
         }
 
         private void setupPaths()

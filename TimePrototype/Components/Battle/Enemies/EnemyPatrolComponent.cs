@@ -24,7 +24,7 @@ namespace TimePrototype.Components.Battle.Enemies
         //--------------------------------------------------
         // Arrows speed
 
-        protected virtual float _arrowSpeed => 800.0f;
+        protected virtual float _arrowSpeed => 1000.0f;
 
         //----------------------//------------------------//
 
@@ -37,7 +37,7 @@ namespace TimePrototype.Components.Battle.Enemies
             base.initialize();
 
             // Init sprite
-            var texture = entity.scene.content.Load<Texture2D>(Content.Characters.placeholder);
+            var texture = loadTexture();
             sprite = entity.addComponent(new AnimatedSprite(texture, "stand"));
             sprite.CreateAnimation("stand", 0.25f);
             sprite.AddFrames("stand", new List<Rectangle>
@@ -45,16 +45,34 @@ namespace TimePrototype.Components.Battle.Enemies
                 new Rectangle(0, 0, 32, 32),
             });
 
-            sprite.CreateAnimation("walking", 0.15f);
+            sprite.CreateAnimation("walking", 0.08f);
             sprite.AddFrames("walking", new List<Rectangle>
             {
                 new Rectangle(0, 0, 32, 32),
+                new Rectangle(32, 0, 32, 32),
+                new Rectangle(64, 0, 32, 32),
+                new Rectangle(96, 0, 32, 32),
             });
 
-            sprite.CreateAnimation("fire", 0.15f);
+            sprite.CreateAnimation("fire", 0.1f);
             sprite.AddFrames("fire", new List<Rectangle>
             {
-                new Rectangle(32, 0, 32, 32),
+                new Rectangle(0, 32, 32, 32),
+                new Rectangle(0, 32, 32, 32),
+            });
+
+            sprite.CreateAnimation("reload", 0.1f, false);
+            sprite.AddFrames("reload", new List<Rectangle>
+            {
+                new Rectangle(32, 32, 32, 32),
+                new Rectangle(64, 32, 32, 32),
+                new Rectangle(96, 32, 32, 32),
+                new Rectangle(128, 32, 32, 32),
+                new Rectangle(160, 32, 32, 32),
+                new Rectangle(192, 32, 32, 32),
+                new Rectangle(224, 32, 32, 32),
+                new Rectangle(0, 64, 32, 32),
+                new Rectangle(32, 64, 32, 32),
             });
 
             sprite.CreateAnimation("hit", 0.1f, false);
@@ -74,6 +92,11 @@ namespace TimePrototype.Components.Battle.Enemies
 
             // View range
             createViewRange();
+        }
+
+        protected virtual Texture2D loadTexture()
+        {
+            return entity.scene.content.Load<Texture2D>(Content.Characters.enemy);
         }
 
         protected virtual void createViewRange()
