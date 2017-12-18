@@ -13,6 +13,8 @@ namespace TimePrototype.Managers
         public static SoundEffect slowmotion;
         public static SoundEffect hit;
         public static SoundEffect bush;
+        public static SoundEffect key;
+        public static SoundEffect door;
 
         public static Song malicious;
 
@@ -25,6 +27,8 @@ namespace TimePrototype.Managers
             slowmotion = load(Content.Audios.slowmotion);
             hit = load(Content.Audios.hit);
             bush = load(Content.Audios.bush);
+            key = load(Content.Audios.key);
+            door = load(Content.Audios.door);
 
             malicious = loadBgm(Content.Audios.malicious);
         }

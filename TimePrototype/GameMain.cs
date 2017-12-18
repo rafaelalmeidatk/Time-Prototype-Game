@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using Nez;
 using Nez.BitmapFonts;
 using TimePrototype.Managers;
@@ -19,6 +20,7 @@ namespace TimePrototype
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             debugRenderEnabled = false;
+            exitOnEscapeKeypress = false;
 
             IsFixedTimeStep = true;
 
@@ -32,6 +34,9 @@ namespace TimePrototype
             bigBitmapFont = content.Load<BitmapFont>(Nez.Content.Fonts.titleFont);
             smallBitmapFont = content.Load<BitmapFont>(Nez.Content.Fonts.smallFont);
             AudioManager.loadAllSounds();
+
+            MediaPlayer.Play(AudioManager.malicious);
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Initialize()
@@ -44,7 +49,7 @@ namespace TimePrototype
             base.Update(new GameTime());
             base.Draw(new GameTime());
 
-            Core.getGlobalManager<SystemManager>().setMapId(10);
+            Core.getGlobalManager<SystemManager>().setMapId(1);
 
             // Set first scene
             scene = new SceneMap();

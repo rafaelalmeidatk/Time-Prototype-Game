@@ -1,6 +1,8 @@
 ﻿using Nez;
 using System.Collections.Generic;
 using TimePrototype.Components.Player;
+using TimePrototype.Extensions;
+using TimePrototype.Managers;
 
 namespace TimePrototype.Systems
 {
@@ -34,6 +36,7 @@ namespace TimePrototype.Systems
                 var playerComponent = _player.getComponent<PlayerComponent>();
                 if (playerComponent.isWithKey)
                 {
+                    AudioManager.door.Play(1.0f);
                     playerComponent.isWithKey = false;
                     _door.destroy();
                     _enabled = false;

@@ -9,9 +9,11 @@ namespace Nez
 		{
 			public const string arrow = @"audios\arrow";
 			public const string bush = @"audios\bush";
+			public const string door = @"audios\door";
 			public const string footstep = @"audios\footstep";
 			public const string hit = @"audios\hit";
 			public const string jump = @"audios\jump";
+			public const string key = @"audios\key";
 			public const string malicious = @"audios\Malicious";
 			public const string rewind = @"audios\rewind";
 			public const string slowmotion = @"audios\slowmotion";
@@ -42,6 +44,7 @@ namespace Nez
 			public const string map11 = @"maps\map11";
 			public const string map12 = @"maps\map12";
 			public const string map13 = @"maps\map13";
+			public const string map14 = @"maps\map14";
 			public const string map2 = @"maps\map2";
 			public const string map3 = @"maps\map3";
 			public const string map4 = @"maps\map4";
@@ -61,6 +64,11 @@ namespace Nez
 			public const string bush_with_player = @"misc\bush_with_player";
 			public const string distortion_cursor = @"misc\distortion_cursor";
 			public const string door = @"misc\door";
+			public const string end_screen_0 = @"misc\end_screen_0";
+			public const string end_screen_1 = @"misc\end_screen_1";
+			public const string end_screen_2 = @"misc\end_screen_2";
+			public const string end_screen_3 = @"misc\end_screen_3";
+			public const string end_screen_4 = @"misc\end_screen_4";
 			public const string key = @"misc\key";
 			public const string projectile_trap = @"misc\projectile_trap";
 			public const string timer = @"misc\timer";
@@ -105,9 +113,5 @@ namespace Nez
 			public const string waterNormalMap = @"system\waterNormalMap";
 			public const string windowskin = @"system\windowskin";
 		}
-        
     }
 }
-
-
-

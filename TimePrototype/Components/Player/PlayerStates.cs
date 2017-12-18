@@ -243,37 +243,6 @@ namespace TimePrototype.Components.Player
         }
     }
 
-    public class ShotingState : PlayerState
-    {
-        private bool _shot;
-
-        public override void begin()
-        {
-            entity.SetAnimation(PlayerComponent.Animations.Shot);
-        }
-
-        public override void update()
-        {
-            if (!_shot)
-            {
-                _shot = true;
-                shot();
-            }
-            if (entity.sprite.Looped)
-            {
-                fsm.popState();
-            }
-        }
-
-        private void shot()
-        {
-            var start = entity.entity.position;
-            var end = start + 200 * Vector2.UnitX;
-            entity.createEntityOnMap()
-                .addComponent(new HitscanComponent(start, end, false));
-        }
-    }
-
     public class DyingState : PlayerState
     {
         public override void begin()

@@ -42,7 +42,10 @@ namespace TimePrototype.Managers
         {
             _interactionButton = new VirtualButton();
             _interactionButton
-                .addKeyboardKey(Keys.A)
+                .addKeyboardKey(Keys.X)
+                .addKeyboardKey(Keys.Z)
+                .addKeyboardKey(Keys.C)
+                .addKeyboardKey(Keys.Space)
                 .addKeyboardKey(Keys.Enter)
                 .addGamePadButton(0, Buttons.A);
             

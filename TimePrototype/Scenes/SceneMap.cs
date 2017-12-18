@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Nez;
 using Nez.Sprites;
 using Nez.Tiled;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 using TimePrototype.Components;
 using TimePrototype.Components.Battle;
 using TimePrototype.Components.Battle.Traps;
@@ -110,7 +110,6 @@ namespace TimePrototype.Scenes
 
             _slowmotionSeInstance = AudioManager.slowmotion.CreateInstance();
             _slowmotionSeInstance.IsLooped = true;
-            MediaPlayer.Play(AudioManager.malicious);
         }
 
         private void setupMap()
@@ -306,7 +305,6 @@ namespace TimePrototype.Scenes
 
             addEntityProcessor(new BattleSystem());
             addEntityProcessor(new ProjectilesSystem(player));
-            addEntityProcessor(new HitscanSystem());
             addEntityProcessor(new BushSystem(playerComponent));
             addEntityProcessor(new DoorSystem(findEntity("door"), player));
             var key = findEntity("key");
