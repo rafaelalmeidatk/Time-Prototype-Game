@@ -18,7 +18,7 @@ namespace TimePrototype.Scenes.SceneMapExtensions
             var instructionsObj = tiledMap.tiledMap.getObjectGroup("objects").objectWithName("InstructionsMessage");
 
             _instructionsText = Scene.createEntity("instructionsText")
-                .addComponent(new Text(Graphics.instance.bitmapFont, "Press C to enter the bush", Vector2.Zero, Color.White * 0.0f));
+                .addComponent(new Text(Graphics.instance.bitmapFont, "Press C to hide in the bush", Vector2.Zero, Color.White * 0.0f));
             _instructionsText.entity.setPosition(instructionsObj.position + 20 * Vector2.UnitY);
         }
 
