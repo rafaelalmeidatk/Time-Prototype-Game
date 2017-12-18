@@ -487,3 +487,51 @@
 /processor:TiledMapProcessor
 /build:maps/map13.tmx
 
+#begin audios/arrow.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/arrow.ogg
+
+#begin audios/footstep.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/footstep.ogg
+
+#begin audios/jump.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/jump.ogg
+
+#begin audios/rewind.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/rewind.ogg
+
+#begin audios/slowmotion.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/slowmotion.ogg
+
+#begin audios/Malicious.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audios/Malicious.mp3
+
+#begin audios/bush.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/bush.ogg
+
+#begin audios/hit.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audios/hit.ogg
+

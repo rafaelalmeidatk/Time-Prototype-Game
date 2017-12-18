@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez;
+using TimePrototype.Extensions;
 using TimePrototype.FSM;
+using TimePrototype.Managers;
 
 namespace TimePrototype.Components.Battle.Enemies
 {
@@ -64,6 +66,7 @@ namespace TimePrototype.Components.Battle.Enemies
     {
         public override void begin()
         {
+            AudioManager.arrow.Play(1.0f);
             entity.sprite.play("fire");
             entity.turnToPlayer();
             entity.shoot();

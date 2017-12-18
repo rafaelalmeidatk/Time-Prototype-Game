@@ -5,6 +5,18 @@ namespace Nez
 {
     class Content
     {
+		public static class Audios
+		{
+			public const string arrow = @"audios\arrow";
+			public const string bush = @"audios\bush";
+			public const string footstep = @"audios\footstep";
+			public const string hit = @"audios\hit";
+			public const string jump = @"audios\jump";
+			public const string malicious = @"audios\Malicious";
+			public const string rewind = @"audios\rewind";
+			public const string slowmotion = @"audios\slowmotion";
+		}
+
 		public static class Characters
 		{
 			public const string distortion = @"characters\distortion";
@@ -29,6 +41,7 @@ namespace Nez
 			public const string map10 = @"maps\map10";
 			public const string map11 = @"maps\map11";
 			public const string map12 = @"maps\map12";
+			public const string map13 = @"maps\map13";
 			public const string map2 = @"maps\map2";
 			public const string map3 = @"maps\map3";
 			public const string map4 = @"maps\map4";
@@ -53,6 +66,38 @@ namespace Nez
 			public const string timer = @"misc\timer";
 		}
 
+		public static class Nez
+		{
+			public static class Effects
+			{
+				public static class Transitions
+				{
+				}
+
+			}
+
+			public static class Textures
+			{
+				public static class TextureWipeTransition
+				{
+					public const string angular = @"nez\textures\textureWipeTransition\angular";
+					public const string crissCross = @"nez\textures\textureWipeTransition\crissCross";
+					public const string diagonalDistort = @"nez\textures\textureWipeTransition\diagonalDistort";
+					public const string horizontal = @"nez\textures\textureWipeTransition\horizontal";
+					public const string noise = @"nez\textures\textureWipeTransition\noise";
+					public const string pokemon = @"nez\textures\textureWipeTransition\pokemon";
+					public const string sawTooth = @"nez\textures\textureWipeTransition\sawTooth";
+					public const string spiral = @"nez\textures\textureWipeTransition\spiral";
+					public const string wink = @"nez\textures\textureWipeTransition\wink";
+				}
+
+				public const string gooCursor = @"nez\textures\gooCursor";
+				public const string heatDistortionNoise = @"nez\textures\heatDistortionNoise";
+			}
+
+			public const string nezDefaultBMFont = @"nez\NezDefaultBMFont";
+		}
+
 		public static class System
 		{
 			public const string inventorySelector = @"system\inventorySelector";
@@ -60,8 +105,7 @@ namespace Nez
 			public const string waterNormalMap = @"system\waterNormalMap";
 			public const string windowskin = @"system\windowskin";
 		}
-
-
+        
     }
 }
 

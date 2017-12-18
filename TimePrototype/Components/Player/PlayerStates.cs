@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
 using Nez.Tweens;
 using TimePrototype.Components.Battle;
-using TimePrototype.Components.GraphicComponents;
+using TimePrototype.Extensions;
 using TimePrototype.FSM;
 using TimePrototype.Managers;
 using TimePrototype.Scenes;
@@ -97,6 +96,7 @@ namespace TimePrototype.Components.Player
         {
             if (_needJump)
             {
+                AudioManager.jump.Play(1f);
                 _needJump = false;
                 entity.Jump();
             }
@@ -128,6 +128,8 @@ namespace TimePrototype.Components.Player
 
         public override void begin()
         {
+            AudioManager.rewind.Play(1.0f, 1.0f, -0.5f);
+
             entity.entity.removeComponent<TrailRibbon>();
             _trailRibbon = entity.entity.addComponent(new TrailRibbon {ribbonRadius = 9, startColor = Color.WhiteSmoke, endColor = Color.White});
             _trailRibbon.ribbonsToDraw = 1.0f;
@@ -203,6 +205,9 @@ namespace TimePrototype.Components.Player
             entity.sprite.setEnabled(false);
             _input.IsLocked = true;
 
+            // Play the sound
+            AudioManager.bush.Play(1.0f);
+
             // Find the bush to change the sprite
             var bush = Physics.overlapRectangle(entity.entity.getComponent<BoxCollider>().bounds,
                 1 << SceneMap.BUSHES_LAYER);
@@ -232,6 +237,8 @@ namespace TimePrototype.Components.Player
             _bushSprite.setSubtexture(new Subtexture(entity.entity.scene.content.Load<Texture2D>(Content.Misc.bush)));
             entity.sprite.setEnabled(true);
             _input.IsLocked = false;
+
+            AudioManager.bush.Play(1.0f, 0.5f, 1.0f);
         }
     }
 

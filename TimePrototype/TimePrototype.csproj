@@ -79,8 +79,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentPathGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\SoundEffectExtensions.cs" />
     <Compile Include="FSM\FiniteStateMachine.cs" />
     <Compile Include="GameMain.cs" />
+    <Compile Include="Managers\AudioManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\SystemManager.cs" />
     <Compile Include="NPCs\First Act\IntroduceSniper.cs" />

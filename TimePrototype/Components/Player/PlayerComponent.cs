@@ -11,6 +11,7 @@ using TimePrototype.Components.Sprites;
 using TimePrototype.FSM;
 using TimePrototype.Managers;
 using TimePrototype.Scenes;
+using TimePrototype.Extensions;
 
 namespace TimePrototype.Components.Player
 {
@@ -102,6 +103,11 @@ namespace TimePrototype.Components.Player
         // Can take damage
 
         public virtual bool canTakeDamage => !returningInTime && !isInsideBush;
+
+        //--------------------------------------------------
+        // Footstep sound cooldown
+
+        private float _footstepCooldown;
 
         //--------------------------------------------------
         // Is with key
@@ -212,7 +218,7 @@ namespace TimePrototype.Components.Player
         public void onHit(Vector2 knockback)
         {
             if (returningInTime) return;
-            //(entity.scene as SceneMap)?.startScreenShake(1, 200);
+            AudioManager.hit.Play(0.7f);
             _knockbackTick = new Vector2(0.06f, 0.04f);
             _knockbackVelocity = new Vector2(knockback.X * 60, -5);
         }
@@ -308,6 +314,16 @@ namespace TimePrototype.Components.Player
             var velocity = _forceMovement ? _forceMovementVelocity.X : axis;
             if (canMove() && (velocity > 0 || velocity < 0))
             {
+                if (isOnGround() && axis != 0 && _footstepCooldown <= 0.0f)
+                {
+                    _footstepCooldown = 0.25f;
+                    AudioManager.footstep.Play(0.7f);
+                }
+                else
+                {
+                    _footstepCooldown -= Time.deltaTime;
+                }
+
                 var po = _platformerObject;
                 var mms = po.maxMoveSpeed;
                 var moveSpeed = _walljumpForcedMovement ? po.gravity * mms : po.moveSpeed;

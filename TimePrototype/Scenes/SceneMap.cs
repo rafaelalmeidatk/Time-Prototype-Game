@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
-using Nez.Textures;
 using Nez.Tiled;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using TimePrototype.Components;
 using TimePrototype.Components.Battle;
-using TimePrototype.Components.Battle.Enemies;
 using TimePrototype.Components.Battle.Traps;
 using TimePrototype.Components.GraphicComponents;
 using TimePrototype.Components.Map;
@@ -74,6 +74,8 @@ namespace TimePrototype.Scenes
         // Player
 
         private PlayerComponent _playerComponent;
+        public bool _lastSlowmotionState;
+        public SoundEffectInstance _slowmotionSeInstance;
 
         //--------------------------------------------------
         // Heat and Vignette post processors
@@ -106,6 +108,10 @@ namespace TimePrototype.Scenes
             setupEntityProcessors();
             getEntityProcessor<NpcInteractionSystem>().mapStart();
             Core.getGlobalManager<InputManager>().IsLocked = false;
+
+            _slowmotionSeInstance = AudioManager.slowmotion.CreateInstance();
+            _slowmotionSeInstance.IsLooped = true;
+            MediaPlayer.Play(AudioManager.malicious);
         }
 
         private void setupMap()
@@ -184,7 +190,7 @@ namespace TimePrototype.Scenes
             _playerComponent = playerComponent;
             systemManager.setPlayer(player);
         }
-
+        
         private void setupPaths()
         {
             var pathObjectGroup = _tiledMap.getObjectGroup("paths");
@@ -239,6 +245,17 @@ namespace TimePrototype.Scenes
             }
         }
 
+        private EnemyComponent createEnemyInstance(string enemyName, bool patrolStartRight)
+        {
+            var enemiesNamespace = typeof(BattleComponent).Namespace + ".Enemies";
+            var type = Type.GetType(enemiesNamespace + "." + enemyName + "Component");
+            if (type != null)
+            {
+                return Activator.CreateInstance(type, new object[] { patrolStartRight }) as EnemyComponent;
+            }
+            return null;
+        }
+
         private void setupTraps()
         {
             var trapsObjectGroup = _tiledMap.getObjectGroup("traps");
@@ -273,17 +290,6 @@ namespace TimePrototype.Scenes
                     center.X * rot.X + center.Y * rot.Y);
                 entity.transform.position = entity.position + trap.position + rotCenter;
             }
-        }
-
-        private EnemyComponent createEnemyInstance(string enemyName, bool patrolStartRight)
-        {
-            var enemiesNamespace = typeof(BattleComponent).Namespace + ".Enemies";
-            var type = Type.GetType(enemiesNamespace + "." + enemyName + "Component");
-            if (type != null)
-            {
-                return Activator.CreateInstance(type, new object[] { patrolStartRight }) as EnemyComponent;
-            }
-            return null;
         }
 
         private void setupEntityProcessors()
@@ -469,6 +475,22 @@ namespace TimePrototype.Scenes
             base.update();
 
             // Update post processors
+            if (_playerComponent.isSlowingdownTheTime != _lastSlowmotionState)
+            {
+                _lastSlowmotionState = _playerComponent.isSlowingdownTheTime;
+                if (_lastSlowmotionState)
+                {
+                    _slowmotionSeInstance.Volume = 1.0f;
+                    _slowmotionSeInstance.Play();
+                    MediaPlayer.Volume = 0.7f;
+                }
+                else
+                {
+                    _slowmotionSeInstance.Volume = 0.0f;
+                    _slowmotionSeInstance.Stop();
+                    MediaPlayer.Volume = 1.0f;
+                }
+            }
             _heatDistortionPostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
             //_vignettePostProcessor.enabled = _playerComponent.isSlowingdownTheTime;
 
